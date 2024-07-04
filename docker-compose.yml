@@ -1,0 +1,40 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile  # backend 디렉토리의 Dockerfile을 사용
+    ports:
+      - "8003:8000"
+    volumes:
+      - ./backend/project:/app/backend
+    restart: always
+    ipc: host
+    environment:
+      #- DB_HOST=192.168.31.7 # 느그 와이파이 ip주소입니다. 매번 바꿔주세요 172.30.1.22
+      - DB_NAME=wemby # 느그 이름
+      - DB_USER=root # 느그 사용자 이름
+      - DB_PW=jiwo102528@ #느그 비밀번호
+      - TZ=Asia/Seouls
+    command: python /app/backend/manage.py runserver 0.0.0.0:8000
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile  # frontend 디렉토리의 Dockerfile을 사용
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/myapp:/app/frontend
+    command: npm start
+
+  revers_proxy:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    ports:
+      - "84:80"
+    depends_on:
+      - backend
+      - frontend
+    restart: always
