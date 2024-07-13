@@ -26,4 +26,4 @@ from wemby_app.views import register_user
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/result', register_user)
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
