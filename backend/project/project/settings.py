@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -162,26 +163,48 @@ REST_FRAMEWORK = {
     ]
 }
 
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': { 
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'verbose',
+#         },
+#         'file': {
+#             'level': 'INFO',
+#             'class': 'logging.FileHandler',
+#             'filename': '../../logger.log',  # 로그 파일 경로 및 이름
+#             'formatter': 'verbose',
+#         },
+#     },
+#     'formatters': {
+#         'verbose': {
+#             'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+#         },
+#     },
+#     'root': {
+#         'handlers': ['file'],
+#         'level': 'INFO',
+#     },
+# }
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': '../../logger.log',  # 로그 파일 경로 및 이름
-            'formatter': 'verbose',
-        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        }
     },
-    'formatters': {
-        'verbose': {
-            'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        },
-    },
-    'root': {
-        'handlers': ['file'],
-        'level': 'INFO',
-    },
+    'loggers': {
+        'wemby': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        }
+    }
 }
 
 

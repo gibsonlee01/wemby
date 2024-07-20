@@ -1,4 +1,4 @@
-import { Button, Row } from 'reactstrap';
+import { Row } from 'reactstrap';
 import { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Locale } from '../constants';
