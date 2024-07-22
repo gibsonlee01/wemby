@@ -9,6 +9,7 @@ import axios from 'axios';
 import { API_REGISTER } from '../constants';
 
 // import { Locale } from '../constants';
+//changes
 
 // 유효성 검사 스키마 정의
 const schema = yup.object().shape({
