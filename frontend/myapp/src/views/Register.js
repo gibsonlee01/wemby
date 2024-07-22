@@ -7,10 +7,9 @@ import { Avatar } from 'antd';
 import BasicImage from '../photo/basic.png'; 
 import axios from 'axios';
 import { API_REGISTER } from '../constants';
+import { useNavigate } from 'react-router-dom';
 
 // import { Locale } from '../constants';
-//changes
-//commit 
 
 // 유효성 검사 스키마 정의
 const schema = yup.object().shape({
@@ -30,6 +29,8 @@ const Register = () => {
   const fileInput = useRef(null);
   const [image, setImage] = useState(BasicImage);
   const [imagefile, setImagefile] = useState();
+  const navigate = useNavigate();
+
 
 
   const formData = new FormData();
@@ -52,9 +53,10 @@ const Register = () => {
         },
       });
       console.log(response.data);
+      navigate('/list');
     } catch (error) {
       console.error('Error uploading file:', error);
-      alert('파일 업로드 중 오류가 발생했습니다.(사진 파일이 너무 커요!)');
+      alert('파일 업로드 중 오류가 발생했습니다.');
       window.location.reload(); // 창 리로드
     }
   };
