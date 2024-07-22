@@ -1,7 +1,10 @@
+# serializers.py
 from rest_framework import serializers
 from .models import User
 
 class UserSerializer(serializers.ModelSerializer):
+    profile_picture = serializers.ImageField(required=False)
+
     class Meta:
         model = User
-        fields = ['id', 'name', 'gender', 'bio', 'profile_picture', 'instagram_id', 'likes']
+        fields = '__all__'

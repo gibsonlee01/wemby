@@ -15,7 +15,7 @@ const schema = yup.object().shape({
   name: yup.string().required('이름을 입력하세요'),
   gender: yup.string().required('성별을 선택하세요'),
   instagramId: yup.string().required('인스타그램 아이디를 입력하세요'),
-  bio: yup.string().required('자기소개를 입력하세요'),
+  bio: yup.string().required('간단한 자기소개를 입력하세요'),
 });
 
 
@@ -27,7 +27,7 @@ const Register = () => {
 
   const fileInput = useRef(null);
   const [image, setImage] = useState(BasicImage);
-  const [imagefile, setImagefile] = useState(null);
+  const [imagefile, setImagefile] = useState();
 
 
   const formData = new FormData();
@@ -38,12 +38,10 @@ const Register = () => {
     formData.append('gender', data.gender);
     formData.append('instagram_id', data.instagramId);
     formData.append('bio', data.bio);
-    formData.append('profile_picture', imagefile); // 없으면 Null 있으면 파일 객체
     formData.append('likes', 0)
-
-    // formData.forEach((value, key) => {
-    //   console.log(key, value);
-    // });
+    if (imagefile){
+      formData.append('profile_picture', imagefile);
+    }
 
     try {
       const response = await axios.post(API_REGISTER, formData, {
@@ -54,6 +52,8 @@ const Register = () => {
       console.log(response.data);
     } catch (error) {
       console.error('Error uploading file:', error);
+      alert('파일 업로드 중 오류가 발생했습니다.(사진 파일이 너무 커요!)');
+      window.location.reload(); // 창 리로드
     }
   };
 
@@ -182,27 +182,27 @@ const Register = () => {
                   남성
                   <input 
                     type="radio" 
-                    value="male" 
+                    value="M" 
                     {...register('gender')} 
-                    checked={watch('gender') === 'male'}
+                    checked={watch('gender') === 'M'}
                   />
                 </label>
                 <label style={{marginRight:'20%'}}>
                   여성
                   <input 
                     type="radio" 
-                    value="female" 
+                    value="W" 
                     {...register('gender')} 
-                    checked={watch('gender') === 'female'}
+                    checked={watch('gender') === 'W'}
                   />
                 </label>
                 <label>
                   기타
                   <input 
                     type="radio" 
-                    value="etc" 
+                    value="E" 
                     {...register('gender')} 
-                    checked={watch('gender') === 'etc'}
+                    checked={watch('gender') === 'E'}
                   />
                 </label>
               </div>
@@ -241,7 +241,7 @@ const Register = () => {
 
         <Row>
           <div style={styles.largeBlackText}>
-              인스타 아이디
+              인스타그램 아이디
           </div>  
           <div style={styles.middleBlackText}>
               #친구가 연락할 수 있게 인스타 아이디를 알려주세요.
