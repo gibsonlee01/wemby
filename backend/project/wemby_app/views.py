@@ -32,6 +32,7 @@ def get_all_users(request):
         return Response(serializer.data, status=status.HTTP_200_OK)  # 직렬화된 데이터와 함께 응답 반환
     
     
+    
 # @api_view(['POST'])
 # def register_user(request):
 #     logger.info('This is an info message')

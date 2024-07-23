@@ -38,8 +38,8 @@ const List = () => {
           <div className="row">
             <div className="col">
                 {user.profile_picture ? (
-                  <img src={`/backend/project/${user.profile_picture}`} alt="profile" />
-                    
+                  console.log(`http://127.0.0.1:84${user.profile_picture}`),
+                  <img src={`http://127.0.0.1:84${user.profile_picture}`} alt="profile" />
                 ) : (
                   // <img src="default-profile.png" alt="default profile" />
                   console.log('default profile')
