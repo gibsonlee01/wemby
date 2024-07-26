@@ -45,7 +45,6 @@ const Register = () => {
     if (imagefile){
       formData.append('profile_picture', imagefile);
     }
-
     try {
       const response = await axios.post(API_REGISTER, formData, {
         headers: {
