@@ -126,12 +126,14 @@ const Register = () => {
   };
   return (
     <Fragment>
+      <Row style={{alignItems:'center', justifyContent:'center', display:'flex' }}>
       <form onSubmit={handleSubmit(onSubmit)} style={{padding:'15px'}}>
         <Row>
           <div style={{
             width: "100%",
             backgroundColor: 'white', // 배경색을 흰색으로 설정
             paddingTop: '5%',
+            borderRadius:'20px',
           }}>
             <div style={{
               background: 'linear-gradient(to right, #FF2B70, #FF586A)', // 그라디언트 색상
@@ -239,6 +241,7 @@ const Register = () => {
               />
               </Row>
             </div>
+            
           </Row>
         </Row>
 
@@ -281,9 +284,11 @@ const Register = () => {
             onMouseOut={(e) => e.currentTarget.style.backgroundColor = styles.button.backgroundColor}
           >
             등록하기
-          </button>      
+          </button> 
+               
         </Row>
       </form>
+      </Row>
     </Fragment>
   );
 };
