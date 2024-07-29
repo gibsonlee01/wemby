@@ -5,6 +5,9 @@ import { Fragment } from 'react';
 import React, { useEffect , useState } from 'react';
 import axios  from 'axios';
 import { API_GETALLUSERS } from '../constants';
+import './css/List.css';
+import { Row } from 'reactstrap';
+import  VideoCard  from '../Components/VideoCard';
 
 const List = () => {
   const [users, setUsers] = useState([]);
@@ -24,35 +27,32 @@ const List = () => {
     };
 
     fetchUsers();
+    
   }, []);
 
-
+  console.log(users);
   if (loading) return <Fragment>Loading...</Fragment>;
   if (error) return <Fragment>Error: {error.message}</Fragment>;
 
   return (
     <Fragment>
-    <div>
-      {users.map((user) => (
-        <div key={user.id}>
-          <div className="row">
-            <div className="col">
-                {user.profile_picture ? (
-                  <img src={`${user.profile_picture}`} alt="profile" />
-                ) : (
-                  // <img src="default-profile.png" alt="default profile" />
-                  console.log('default profile')
-                )}
+      <Row  style = {{ display : 'flex', justifyContent:'center', alignItems : 'center', backgroundColor : 'green'}}>
+        <Row style = {{ minWidth : '400px', backgroundColor:'white' }}>
+          <div>
+          {users.map((user) => (
+            <div key={user.id}>
+            <VideoCard
+              // profile_picture={user.profile_picture}
+              user={user}
+            />
             </div>
-            <div className="col">
-              <div>{user.name}</div>
-            </div>
+          ))}
           </div>
-        </div>
-      ))}
-    </div>
-  </Fragment>
+        </Row>
+      </Row>
+    </Fragment>
   );
 }
 
 export default List;
+
