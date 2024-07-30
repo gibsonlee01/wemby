@@ -36,11 +36,11 @@ const List = () => {
 
   return (
     <Fragment>
-      <Row  style = {{ display : 'flex', justifyContent:'center', alignItems : 'center', backgroundColor : 'green'}}>
+      <Row  style = {{ display : 'flex', justifyContent:'center', alignItems : 'center', backgroundColor : 'white'}}>
         <Row style = {{ minWidth : '400px', backgroundColor:'white' }}>
-          <div>
+          <div class="video-Container">
           {users.map((user) => (
-            <div key={user.id}>
+            <div class="videoCard" key={user.id}>
             <VideoCard
               // profile_picture={user.profile_picture}
               user={user}
