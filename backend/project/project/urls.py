@@ -28,4 +28,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/register', register_user),
     path('api/list', get_all_users)
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
