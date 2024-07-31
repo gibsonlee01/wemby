@@ -26,7 +26,7 @@ def register_user(request):
 @api_view(['GET'])
 def get_all_users(request):
     logger.info('Received request to get all users')
-    
+    # console.log('Received request to get all users')
     if request.method == 'GET':
         users = User.objects.all()  # 모든 사용자 가져오기
         serializer = UserSerializer(users, many=True)  # 사용자 데이터를 직렬화
