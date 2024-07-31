@@ -30,7 +30,7 @@ const List = () => {
     
   }, []);
 
-  console.log(users);
+  // console.log(users);
   if (loading) return <Fragment>Loading...</Fragment>;
   if (error) return <Fragment>Error: {error.message}</Fragment>;
 
