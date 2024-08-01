@@ -2,8 +2,11 @@ import React, { Fragment } from 'react';
 import './VideoCard.css';
 import BasicImage from '../photo/basic.png'; 
 import { Col } from 'reactstrap';
+import { useState } from 'react';
 
 const VideoCard = ({ user }) => {
+
+    const [isBlurred, setIsBlurred] = useState(true);
 
     const isMobileDevice = () => {
         return /Mobi|Android/i.test(navigator.userAgent);
@@ -13,6 +16,19 @@ const VideoCard = ({ user }) => {
     const instagramLink = isMobileDevice()
         ? `instagram://user?username=${user.instagram_id}`
         : `https://www.instagram.com/${user.instagram_id}`;
+
+
+     // Instagram ID를 반으로 나누기
+    const halfIndex = Math.ceil(user.instagram_id.length / 2);
+    const visiblePart = user.instagram_id.slice(0, halfIndex);
+    const blurredPart = user.instagram_id.slice(halfIndex);
+
+    const handleLinkClick = (e) => {
+        if (isBlurred) {
+            e.preventDefault(); // 기본 동작을 막아 페이지 리로드를 방지
+        }
+    };
+
 
     return (
         <Fragment>
@@ -50,11 +66,23 @@ const VideoCard = ({ user }) => {
                         display: 'flex', 
                         alignItems: 'center', 
                         justifyContent: 'center', 
-                        backgroundColor: 'white',
+                        backgroundColor: 'red',
                         padding: '20px' // 내부 여백 추가
                     }}>
-                        <a href={instagramLink} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
-                            <h1>{user.instagram_id}</h1>
+                        <button style={{}} onClick={() => setIsBlurred(false)}>
+                            <h1>See Whole!</h1>
+                        </button>
+                        <a
+                            href={isBlurred ? '#' : instagramLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ textDecoration: 'none', color: 'inherit' }}
+                            onClick={handleLinkClick}
+                        >
+                            <h1>
+                                {visiblePart}
+                                <span className={isBlurred ? 'blurred-text' : ''}>{blurredPart}</span>
+                            </h1>
                         </a>
                     </div>
                 </div>
