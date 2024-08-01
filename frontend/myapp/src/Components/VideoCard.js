@@ -4,6 +4,16 @@ import BasicImage from '../photo/basic.png';
 import { Col } from 'reactstrap';
 
 const VideoCard = ({ user }) => {
+
+    const isMobileDevice = () => {
+        return /Mobi|Android/i.test(navigator.userAgent);
+    }
+
+    // 모바일인지 여부에 따라 링크를 설정
+    const instagramLink = isMobileDevice()
+        ? `instagram://user?username=${user.instagram_id}`
+        : `https://www.instagram.com/${user.instagram_id}`;
+
     return (
         <Fragment>
             <Col style={{ padding: '10px', backgroundColor: 'white' }}>
@@ -43,7 +53,9 @@ const VideoCard = ({ user }) => {
                         backgroundColor: 'white',
                         padding: '20px' // 내부 여백 추가
                     }}>
-                        <h1>{user.instagram_id}</h1>
+                        <a href={instagramLink} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
+                            <h1>{user.instagram_id}</h1>
+                        </a>
                     </div>
                 </div>
             </Col>
