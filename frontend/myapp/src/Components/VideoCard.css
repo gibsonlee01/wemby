@@ -26,4 +26,8 @@
     object-position: center; /* 중앙에 배치 */
 }
 
+.blurred-text {
+    filter: blur(5px); /* 블러 정도를 원하는 만큼 조정하세요 */
+}
+
 

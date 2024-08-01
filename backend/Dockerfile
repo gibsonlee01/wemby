@@ -17,7 +17,10 @@ RUN pip install gunicorn
 RUN pip install -r requirements.txt
 
 # 소스 코드 복사
-COPY backend/ /app/backend/
+COPY backend/reset_db.sh /app/backend/
+#초기화 스크립트 복사-수정
+# COPY backend/reset_db.sh /app/backend/reset_db.sh
+RUN chmod +x /app/backend/reset_db.sh
 
 # Expose the port
 EXPOSE 8000
