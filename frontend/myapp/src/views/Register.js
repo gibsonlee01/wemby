@@ -4,11 +4,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Row } from 'reactstrap';
 import { Avatar } from 'antd';
-import BasicImage from '../photo/basic.png'; 
+import BasicImage from '../photo/plus.svg'; 
 import axios from 'axios';
 import { API_REGISTER } from '../constants';
 import { useNavigate } from 'react-router-dom';
-
 // import { Locale } from '../constants';
 
 // 유효성 검사 스키마 정의
@@ -30,8 +29,15 @@ const Register = () => {
   const [image, setImage] = useState(BasicImage);
   const [imagefile, setImagefile] = useState();
   const navigate = useNavigate();
+  const [opacity, setOpacity] = useState(0.2); // 초기 opacity 값을 1로 설정
 
+  const handleMouseDown = () => {
+    setOpacity(0); // 마우스 다운 시 투명도를 0.5로 설정
+  };
 
+  const handleMouseUp = () => {
+    setOpacity(0.2); // 마우스 업 시 투명도를 다시 1로 설정
+  };
 
   const formData = new FormData();
 
@@ -90,16 +96,19 @@ const Register = () => {
     largeBlackText: {
       width: "100%",
       paddingTop: '30px',
-      fontWeight: '800',
-      fontSize: '25px',
-      color:'black'
+      fontWeight: '600',
+      fontSize: '15px',
+      color:'black',
+      opacity: '0.7',
     },
 
     middleBlackText:{
       width: "100%",
-      fontWeight: '800',
-      fontSize: '15px',
-      color:'black'
+      fontWeight: '550',
+      fontSize: '12px',
+      color:'black',
+      opacity: '0.5',
+      paddingTop: '3px',
     },
     errorMessage: {
       color: '#ff4d4f', // 원하는 글씨 색상으로 변경
@@ -110,7 +119,7 @@ const Register = () => {
     },
     button: {
       width:'100%',
-      backgroundColor: '#FF2B70', // 버튼 배경색
+      background: 'linear-gradient(to right, #DB4455, #FF586A)', 
       color: 'white', // 버튼 텍스트 색상
       border: 'none', // 버튼 테두리 제거
       borderRadius: '10px', // 버튼 모서리 둥글게
@@ -139,8 +148,8 @@ const Register = () => {
               background: 'linear-gradient(to right, #FF2B70, #FF586A)', // 그라디언트 색상
               WebkitBackgroundClip: 'text', // 텍스트 클립
               WebkitTextFillColor: 'transparent', // 텍스트 색상 투명
-              fontWeight: '800',
-              fontSize: '35px',
+              fontWeight: '600',
+              fontSize: '30px',
             }}>
               반가워요!
             </div>
@@ -153,8 +162,9 @@ const Register = () => {
               background: 'linear-gradient(to right, #FF2B70, #FF586A)', // 그라디언트 색상
               WebkitBackgroundClip: 'text', // 텍스트 클립
               WebkitTextFillColor: 'transparent', // 텍스트 색상 투명
-              fontWeight: '800',
-              fontSize: '15px',
+              fontWeight: '500',
+              fontSize: '13px',
+              opacity: '0.7',
             }}>
               # 등록하신 프로필은 개인정보 보호를 위해<br/>
               오늘이 지나면 삭제됩니다!
@@ -164,11 +174,8 @@ const Register = () => {
 
         <Row>
           <div style={styles.largeBlackText}>
-              이름을 알려주세요
+              닉네임을 알려주세요
           </div>  
-          <div style={styles.middleBlackText}>
-              #다른 분들께는 일부만 표시됩니다(이*상)
-          </div> 
           <Row>
             <div style={{paddingTop:'10px'}}>
               <input style={styles.customInput} {...register('name')} />
@@ -183,7 +190,7 @@ const Register = () => {
           </div>  
           <Row style={{paddingTop:'10px'}}>
               <div style={{display:'flex'}}>
-                <label style={{marginRight:'20%'}}>
+                <label style={{marginRight:'20%', fontSize:'12px'}}>
                   남성
                   <input 
                     type="radio" 
@@ -192,7 +199,7 @@ const Register = () => {
                     checked={watch('gender') === 'M'}
                   />
                 </label>
-                <label style={{marginRight:'20%'}}>
+                <label style={{marginRight:'20%', fontSize:'12px'}}>
                   여성
                   <input 
                     type="radio" 
@@ -201,7 +208,7 @@ const Register = () => {
                     checked={watch('gender') === 'W'}
                   />
                 </label>
-                <label>
+                <label style={{ fontSize:'12px'}}>
                   기타
                   <input 
                     type="radio" 
@@ -224,12 +231,16 @@ const Register = () => {
     
           <Row>
             <div style={{padding:'10px'}}>
-              <Row style={{display:'flex', alignItems:"center", justifyContent:'center'}}>
+              <Row style={{display:'flex', alignItems:"center", justifyContent:'center', backgroundColor:'#e9ecef', borderRadius:'5%'}}>
               <Avatar 
                 src={image} 
-                style={{ margin: '20px' }} 
-                size={200} 
-                onClick={() => { fileInput.current.click(); }}
+                style={{ margin: '20px' , opacity: opacity }} 
+                size={150} 
+                onClick={() => { fileInput.current.click(); }}  // 클릭 시 파일 선택 창 열기
+                onMouseDown={handleMouseDown}  // 마우스 다운 시 투명도 변경
+                onMouseUp={handleMouseUp}  // 마우스 업 시 투명도 원상태로
+                onTouchStart={handleMouseDown}  // 터치 시작 시 투명도 변경 (모바일)
+                onTouchEnd={handleMouseUp}  // 터치 끝날 때 투명도 원상태로 (모바일)
               />
               <input 
                 type="file" 
@@ -268,7 +279,7 @@ const Register = () => {
             <div style={{paddingTop:'10px'}}>
               <textarea
               style={styles.customInput} 
-              placeholder='안녕하세요! 홍익대학교 학생 2명하고 노실 분 구해요'
+              placeholder='  안녕하세요! 홍익대학교 학생 2명하고 노실 분 구해요'
               {...register('bio')} 
               rows="4" // 텍스트 필드의 높이를 설정합니다
               />
