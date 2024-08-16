@@ -23,9 +23,11 @@ from django.conf.urls.static import static
 
 from wemby_app.views import register_user
 from wemby_app.views import get_all_users
+from wemby_app.views import kakaopay_ready
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/register', register_user),
-    path('api/list', get_all_users)
+    path('api/list', get_all_users),
+    path('api/kakaopay/ready', kakaopay_ready),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

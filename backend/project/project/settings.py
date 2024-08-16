@@ -215,3 +215,4 @@ LOGGING = {
 # ]
 
 CORS_ORIGIN_ALLOW_ALL = True
+KAKAO_API_KEY = os.getenv("KAKAO_API_KEY") 
