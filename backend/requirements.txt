@@ -10,3 +10,4 @@ virtualenv==20.23.1
 django-cors-headers==4.2.0
 mysqlclient==2.2.0
 pillow==10.4.0
+requests==2.31.0

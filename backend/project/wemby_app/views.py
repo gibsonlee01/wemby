@@ -6,6 +6,9 @@ from rest_framework.response import Response
 import logging
 from .models import User 
 from .serializer import UserSerializer
+from django.conf import settings
+from django.http import JsonResponse
+import requests
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +34,45 @@ def get_all_users(request):
         users = User.objects.all()  # 모든 사용자 가져오기
         serializer = UserSerializer(users, many=True)  # 사용자 데이터를 직렬화
         return Response(serializer.data, status=status.HTTP_200_OK)  # 직렬화된 데이터와 함께 응답 반환
+    
+    
+    
+@api_view(['POST'])
+def kakaopay_ready(request):
+    logger = logging.getLogger(__name__)  # 로거 객체 생성
+    
+    url = "https://kapi.kakao.com/v1/payment/ready"
+    headers = {
+        "Authorization": f"KakaoAK {settings.KAKAO_API_KEY}",
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+    }
+    data = {
+        "cid": "TC0ONETIME",
+        "partner_order_id": "partner_order_id",
+        "partner_user_id": "partner_user_id",
+        "item_name": "Sample Item",
+        "quantity": 1,
+        "total_amount": 1000,
+        "vat_amount": 100,
+        "tax_free_amount": 0,
+        "approval_url": "http://localhost:3000/list",  # 프론트엔드의 리디렉션 URL
+        "fail_url": "http://localhost:3000/list",
+        "cancel_url": "http://localhost:3000/list"
+    }
+    
+    try:
+        response = requests.post(url, headers=headers, data=data)
+        response.raise_for_status()  # HTTP 에러 발생 시 예외 처리
+        response_data = response.json()
+        return JsonResponse(response_data)
+    except requests.exceptions.RequestException as e:
+        logger.error(f"KakaoPay API request failed: {e}")
+        return JsonResponse({"error": "Failed to initiate KakaoPay"}, status=500)
+    except Exception as e:
+        logger.error(f"Unexpected error: {e}")
+        return JsonResponse({"error": "Internal Server Error"}, status=500)
 
+   
 # @api_view(['GET'])
 # def get_all_users(request):
 #     logger.info('Received request to get all users')
