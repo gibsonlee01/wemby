@@ -187,7 +187,7 @@ const VideoCard = ({ user }) => {
                         // border: '2px solid black', // 테두리 설정
                         padding: '10px', // 내부 여백
                         margin:'20px',
-                        background: 'linear-gradient(to right, #DB4455, #F0939E)', 
+                        background: '#ff5b5b', 
                         borderRadius: '10px', // 모서리 둥글게 설정 (선택사항)
                         minHeight:'300px',
                         display:'flex',
