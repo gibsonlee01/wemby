@@ -28,9 +28,9 @@ const VideoCard = ({ user }) => {
     const blurredPart = user.instagram_id.slice(halfIndex);
 
     const handleLinkClick = (e) => {
-        // if (isBlurred) {
-        //     e.preventDefault(); // 기본 동작을 막아 페이지 리로드를 방지
-        // }
+        if (isBlurred) {
+            e.preventDefault(); // 기본 동작을 막아 페이지 리로드를 방지
+        }
     };
 
     const handlePayment = async () => {
@@ -85,15 +85,102 @@ const VideoCard = ({ user }) => {
                            margin: '20px',
                            borderRadius: '10px', // 모서리 둥글게 설정
                            minHeight: '300px',
-                           backgroundImage: `url(${user.profile_picture})`, // 배경 이미지 설정
-                           backgroundSize: 'cover', // 이미지 크기 조절 (cover로 설정 시 전체를 덮음)
+                           backgroundImage: `
+                           url(${user.profile_picture}) /* 실제 이미지 */
+                         `,
+                            backgroundSize: 'cover', // 이미지 크기 조절 (cover로 설정 시 전체를 덮음)
                            backgroundPosition: 'center', // 이미지 중앙에 위치
                            backgroundRepeat: 'no-repeat', // 이미지 반복 안 함
                            display: 'flex', // 콘텐츠 정렬을 위해 flexbox 사용
-                           aspectRatio:'9/12'
+                           aspectRatio:'9/12',
+                           flexDirection:'column'
                        }}
                    >
-                       {/* <img src={`${user.profile_picture}`} alt="profile" /> */}
+                    <Row style={{display:'flex', flex:"2"}}>
+                        <div style={{
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'flex-start', 
+                            // padding: '3px' // 내부 여백 추가
+                            paddingBottom: '8px'
+ 
+                        }}>                        
+                            <div style={{
+                                display: 'flex', 
+                                flexDirection: 'column', 
+                                marginLeft: '10px',
+                                gap: '5px', // 간격을 조정하기 위한 gap 속성
+                            }}>
+                                <h1 style={{ 
+                                    fontSize: '24px', 
+                                    color: 'white', 
+                                    margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
+                                    padding: '0', // 필요에 따라 padding도 제거
+                                }}>
+                                    {user.name}
+                                </h1>
+                                
+                                <a
+                                    href={isBlurred ? '#' : instagramLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ 
+                                        textDecoration: 'none', 
+                                        color: 'inherit',
+                                        margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
+                                        padding: '0', // 필요에 따라 padding도 제거
+                                    }}
+                                    onClick={handleLinkClick}
+                                >
+                                    <h1 style={{ 
+                                        color: 'white', 
+                                        fontSize: '10px', 
+                                        margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
+                                        padding: '0', // 필요에 따라 padding도 제거
+                                    }}>
+                                        {visiblePart}
+                                        <span className={isBlurred ? 'blurred-text' : ''}>{blurredPart}</span>
+                                    </h1>
+                                </a>
+                            </div>
+                        </div>
+                    </Row>
+                    <Row style={{display:'flex', flex:"7", alignItems:'center', justifyContent:'center'}}>
+                    <div style={{
+                        color: 'white',        // 글씨 색상을 흰색으로 설정
+                        fontWeight: 'bold',    // 글씨를 두껍게 설정
+                        fontSize: '35px',      // 필요에 따라 글씨 크기 설정
+                        padding: '10px'        // 필요에 따라 여백 설정
+                    }}>
+                        {user.bio}
+                    </div>
+                    </Row>
+                    <Row style={{display:'flex', flex:"1"}}>
+                        <button style={{
+                            background: '#efecec', // 버튼 배경 없애기
+                            border: 'none', // 버튼 테두리 없애기
+                            color: '#707070', // 텍스트 색상
+                            fontSize: '16px', // 텍스트 크기
+                            fontWeight:'800',
+                            cursor: 'pointer',
+                            width:'100%',
+                            borderRadius:'10px'
+                        }} onClick={() => Swal.fire({
+                            icon: "info",
+                            title: "결제 요청",
+                            text: "아이디를 보시려면 1000원이 부과됩니다.",
+                            showCancelButton: true,
+                            confirmButtonText: "결제",
+                            cancelButtonText: "취소",
+                        }).then((result) => {
+                            if(result.isConfirmed){
+                                handlePayment();
+                            }
+                        })}>
+                            저요 👋
+                        </button>
+                    </Row>
+
                    </Row>
                 ) : (
                     <Row style={{
@@ -102,14 +189,81 @@ const VideoCard = ({ user }) => {
                         margin:'20px',
                         background: 'linear-gradient(to right, #DB4455, #F0939E)', 
                         borderRadius: '10px', // 모서리 둥글게 설정 (선택사항)
-                        minHeight:'300px'
+                        minHeight:'300px',
+                        display:'flex',
+                        flexDirection:'column'
                     }}>
-                           <button style={{
-                                background: 'none', // 버튼 배경 없애기
+
+                        
+                        <Row style={{display:'flex', flex:"2"}}>
+                            <div style={{
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                justifyContent: 'flex-start', 
+                                // padding: '3px' // 내부 여백 추가
+                                paddingBottom: '8px'
+    
+                            }}>                        
+                                <div style={{
+                                    display: 'flex', 
+                                    flexDirection: 'column', 
+                                    marginLeft: '10px',
+                                    gap: '5px', // 간격을 조정하기 위한 gap 속성
+                                }}>
+                                    <h1 style={{ 
+                                        fontSize: '24px', 
+                                        color: 'white', 
+                                        margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
+                                        padding: '0', // 필요에 따라 padding도 제거
+                                    }}>
+                                        {user.name}
+                                    </h1>
+                                    
+                                    <a
+                                        href={isBlurred ? '#' : instagramLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style={{ 
+                                            textDecoration: 'none', 
+                                            color: 'inherit',
+                                            margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
+                                            padding: '0', // 필요에 따라 padding도 제거
+                                        }}
+                                        onClick={handleLinkClick}
+                                    >
+                                        <h1 style={{ 
+                                            color: 'white', 
+                                            fontSize: '10px', 
+                                            margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
+                                            padding: '0', // 필요에 따라 padding도 제거
+                                        }}>
+                                            {visiblePart}
+                                            <span className={isBlurred ? 'blurred-text' : ''}>{blurredPart}</span>
+                                        </h1>
+                                    </a>
+                                </div>
+                            </div>
+                        </Row>
+                        <Row style={{display:'flex', flex:"7", alignItems:'center', justifyContent:'center'}}>
+                        <div style={{
+                            color: 'white',        // 글씨 색상을 흰색으로 설정
+                            fontWeight: 'bold',    // 글씨를 두껍게 설정
+                            fontSize: '35px',      // 필요에 따라 글씨 크기 설정
+                            padding: '10px'        // 필요에 따라 여백 설정
+                        }}>
+                            {user.bio}
+                        </div>
+                        </Row>
+                        <Row style={{display:'flex', flex:"1"}}>
+                            <button style={{
+                                background: '#efecec', // 버튼 배경 없애기
                                 border: 'none', // 버튼 테두리 없애기
-                                color: 'white', // 텍스트 색상
+                                color: '#707070', // 텍스트 색상
                                 fontSize: '16px', // 텍스트 크기
-                                cursor: 'pointer'
+                                fontWeight:'800',
+                                cursor: 'pointer',
+                                width:'100%',
+                                borderRadius:'10px'
                             }} onClick={() => Swal.fire({
                                 icon: "info",
                                 title: "결제 요청",
@@ -119,38 +273,12 @@ const VideoCard = ({ user }) => {
                                 cancelButtonText: "취소",
                             }).then((result) => {
                                 if(result.isConfirmed){
-                                    //결제 창 url 
-                                    // window.location.href = "https://kapi.kakao.com/v1/payment/ready";
                                     handlePayment();
                                 }
                             })}>
-                                See Whole!
+                                저요 👋
                             </button>
-
-                            <a
-                                href={instagramLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                style={{ 
-                                    textDecoration: 'none', 
-                                    color: 'inherit',
-                                    margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
-                                    padding: '0', // 필요에 따라 padding도 제거
-                                }}
-                                onClick={handleLinkClick}
-                            >
-                                <h1 style={{ 
-                                    color: 'white', 
-                                    fontSize: '10px', 
-                                    margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
-                                    padding: '0', // 필요에 따라 padding도 제거
-                                }}>
-                                    {visiblePart}
-                                    <span className={isBlurred ? 'blurred-text' : ''}>{blurredPart}</span>
-                                </h1>
-                            </a>
-
-        
+                        </Row>
                     </Row>
                 )}
             </Row>
