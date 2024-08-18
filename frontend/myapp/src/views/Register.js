@@ -150,7 +150,7 @@ const Register = () => {
     },
     formStyle: {
       padding: '15px',
-      width: windowWidth <= 1440 ? '80%' : 'auto'
+      width: windowWidth <= 1000 ? '80%' : 'auto'
     }
   };
   return (

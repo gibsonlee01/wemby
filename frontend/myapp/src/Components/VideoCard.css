@@ -2,7 +2,6 @@
     overflow: auto;
     scroll-snap-type: y mandatory; /* y 축 방향으로 스냅핑 활성화 */
     object-fit: contain;
-    height: 100vh; /* 필요에 따라 높이 조정 */
     object-position: center center;
 }
 
