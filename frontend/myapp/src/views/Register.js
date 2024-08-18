@@ -1,4 +1,4 @@
-import React, { Fragment,useRef, useState } from 'react';
+import React, { Fragment,useRef, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -30,6 +30,8 @@ const Register = () => {
   const [imagefile, setImagefile] = useState();
   const navigate = useNavigate();
   const [opacity, setOpacity] = useState(0.2); // 초기 opacity 값을 1로 설정
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
 
   const handleMouseDown = () => {
     setOpacity(0); // 마우스 다운 시 투명도를 0.5로 설정
@@ -78,6 +80,20 @@ const Register = () => {
       reader.readAsDataURL(file);
     }
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+    };
+
+    // 윈도우 리사이즈 이벤트 리스너 등록
+    window.addEventListener('resize', handleResize);
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+        window.removeEventListener('resize', handleResize);
+    };
+}, []);
 
 
   const styles = {
@@ -132,11 +148,15 @@ const Register = () => {
     buttonHover: {
       backgroundColor: '#FF506A', // 버튼 호버 시 배경색
     },
+    formStyle: {
+      padding: '15px',
+      width: windowWidth <= 1440 ? '80%' : 'auto'
+    }
   };
   return (
     <Fragment>
       <Row style={{alignItems:'center', justifyContent:'center', display:'flex' }}>
-      <form onSubmit={handleSubmit(onSubmit)} style={{padding:'15px'}}>
+      <form onSubmit={handleSubmit(onSubmit)} style={styles.formStyle}>
         <Row>
           <div style={{
             width: "100%",
