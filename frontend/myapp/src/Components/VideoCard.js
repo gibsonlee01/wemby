@@ -77,7 +77,7 @@ const VideoCard = ({ user }) => {
 
     return (
         <Fragment>
-            <Row style={{width:'100%', minHeight:'300px' }}>
+            <Row style={{width:'100%', minHeight:'300px', backgroundColor:"white"}}>
                 {user.profile_picture ? (
                     <Row
                        style={{
