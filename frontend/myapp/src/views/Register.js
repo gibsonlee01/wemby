@@ -228,7 +228,7 @@ const Register = () => {
                     checked={watch('gender') === 'W'}
                   />
                 </label>
-                <label style={{ fontSize:'12px'}}>
+                {/* <label style={{ fontSize:'12px'}}>
                   기타
                   <input 
                     type="radio" 
@@ -236,7 +236,7 @@ const Register = () => {
                     {...register('gender')} 
                     checked={watch('gender') === 'E'}
                   />
-                </label>
+                </label> */}
               </div>
               <div>
                 {errors.gender && <div style={styles.errorMessage}>{errors.gender.message}</div>}
@@ -256,11 +256,22 @@ const Register = () => {
                 src={image} 
                 style={{ margin: '20px' , opacity: opacity }} 
                 size={150} 
-                onClick={() => { fileInput.current.click(); }}  // 클릭 시 파일 선택 창 열기
+                //버그수정요망 
+                onClick={() => {
+                  if (!('ontouchstart' in window)) { // PC인 경우
+                    fileInput.current.click(); // 파일 선택 창 열기
+                  }
+                }} 
+                onTouchStart={(e) => {
+                  handleMouseDown(e); // 터치 시작 시 투명도 변경
+                }}
+                onTouchEnd={(e) => {
+                  handleMouseUp(e); // 터치 끝날 때 투명도 원상태로
+                  fileInput.current.click();  // 파일 선택 창 열기 (모바일)
+                }}
                 onMouseDown={handleMouseDown}  // 마우스 다운 시 투명도 변경
                 onMouseUp={handleMouseUp}  // 마우스 업 시 투명도 원상태로
-                onTouchStart={handleMouseDown}  // 터치 시작 시 투명도 변경 (모바일)
-                onTouchEnd={handleMouseUp}  // 터치 끝날 때 투명도 원상태로 (모바일)
+               
               />
               <input 
                 type="file" 

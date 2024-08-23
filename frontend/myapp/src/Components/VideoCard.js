@@ -1,16 +1,32 @@
 import React, { Fragment } from 'react';
 import './VideoCard.css';
-import BasicImage from '../photo/basic.png'; 
 import { Row } from 'reactstrap';
-import { useState } from 'react';
-import ProfileImage from '../photo/profile.png';
+import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import Cookies from 'js-cookie'; // 쿠키 라이브러리 추가
+
 
 const VideoCard = ({ user }) => {
     console.log(user)
 
     const [isBlurred, setIsBlurred] = useState(true);
+    const [savedTid, setSavedTid] = useState(null);
+
+    useEffect(() => {
+        //approval_url에서 pg_token을 가져온다. 가져와 결제 승인 요청을 함. 
+        const urlParams = new URLSearchParams(window.location.search);
+        const pg_token = urlParams.get('pg_token');
+
+        if (pg_token) {
+            handlePaymentConfirmation(pg_token);
+        }
+
+        const paymentStatus = Cookies.get('paymentStatus');
+        if (paymentStatus === 'success') {
+            setIsBlurred(false);
+        }
+    }, []);
 
     const isMobileDevice = () => {
         return /Mobi|Android/i.test(navigator.userAgent);
@@ -42,6 +58,7 @@ const VideoCard = ({ user }) => {
             });
 
             const data = response.data;
+            setSavedTid(data.tid);  // 결제 준비 단계에서 받은 tid를 저장해두어야 함
             console.log("Response Data:", data);  // 응답 데이터 출력
 
             if(isMobileDevice()){
@@ -65,6 +82,7 @@ const VideoCard = ({ user }) => {
                     });
                 }
             }
+
         } catch (error) {
             Swal.fire({
                 icon: 'error',
@@ -74,6 +92,35 @@ const VideoCard = ({ user }) => {
         }
     };
 
+    const handlePaymentConfirmation = async (pg_token) => {
+        try {
+            const response = await axios.post('/api/kakaopay/approve', {
+                pg_token: pg_token,  // 리다이렉트된 페이지에서 받은 pg_token
+                tid: savedTid,       // 결제 준비 단계에서 받은 tid를 저장해두어야 함
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+    
+            const paymentStatus = response.data.status;
+            if (paymentStatus === 'success') {
+                Cookies.set('paymentStatus', 'success'); // 쿠키에 결제 완료 상태 저장
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: '결제 실패',
+                    text: '결제 과정이 정상적으로 처리되지 않았습니다.',
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: '결제 오류',
+                text: '결제 승인 중 오류가 발생했습니다.',
+            });
+        }
+    };
 
     return (
         <Fragment>
