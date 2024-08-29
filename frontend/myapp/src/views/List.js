@@ -17,26 +17,11 @@ const List = () => {
   const [error, setError] = useState(null);
   //현재 젠더
   const [currentbar, setCurrntbar] = useState('M');
-
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     try {
-  //       const response = await axios.get(API_GETALLUSERS);
-  //       setUsers(response.data);
-  //       setLoading(false);
-  //     } catch (err) { 
-  //       setError(err);
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchUsers();
-    
-  // }, []);
+  
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        // currentbar을 쿼리 파라미터로 추가하여 요청
+        // currentbar을 쿼리 스트링으로 추가하여 요청
         const response = await axios.get(`${API_GETALLUSERS}?gender=${currentbar}`);
         setUsers(response.data);
         setLoading(false);

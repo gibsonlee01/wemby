@@ -78,7 +78,7 @@ def kakaopay_ready(request):
         "total_amount": 2200,
         "vat_amount": 200,
         "tax_free_amount": 0,
-        "approval_url": "https://www.naver.com",
+        "approval_url": "http://172.30.4.225:84/PaymentSuccess",
         "fail_url": "https://www.naver.com",
         "cancel_url": "https://www.naver.com"
     }
@@ -86,6 +86,8 @@ def kakaopay_ready(request):
     result = prepare_kakaopay_payment(secret_key, payload)
     
     # 결과를 Response 객체로 반환
+    
+    print(result)
     return Response(result)
 
 @api_view(['POST'])
@@ -109,7 +111,8 @@ def kakaopay_approve(request):
     
     tid = request.data.get('tid')
     pg_token = request.data.get('pg_token')
-
+    
+    print(tid, pg_token)
     if not tid or not pg_token:
         return Response({'error': 'Missing required parameters'}, status=400)
     
