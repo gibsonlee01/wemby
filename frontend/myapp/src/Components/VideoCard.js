@@ -15,6 +15,7 @@ const VideoCard = ({ user }) => {
 
     useEffect(() => {
         const paymentStatus = Cookies.get(`paymentStatus${user.id}`);
+        console.log(`paymentStatus${user.id} : ${paymentStatus}`);
         if (paymentStatus === 'success') {
             setIsBlurred(false);
         }
@@ -50,12 +51,13 @@ const VideoCard = ({ user }) => {
             });
 
             const data = response.data;
+            localStorage.setItem('userId', user.id); // tid를 저장해둠
             localStorage.setItem('tid', data.tid); // tid를 저장해둠
             console.log("Response Tid:", data.tid);  // 응답 데이터 출력
 
             if(isMobileDevice()){
                 if(data.next_redirect_mobile_url){
-                    window.location.href = `${data.next_redirect_mobile_url}&userId=${user.id}`;
+                    window.location.href = data.next_redirect_mobile_url
                 }else {
                     Swal.fire({
                         icon: 'error',
@@ -65,7 +67,7 @@ const VideoCard = ({ user }) => {
                 }
             }else{
                 if (data.next_redirect_pc_url) {
-                    window.location.href = `${data.next_redirect_mobile_url}&userId=${user.id}`;
+                    window.location.href = data.next_redirect_pc_url
                 } else {
                     Swal.fire({
                         icon: 'error',

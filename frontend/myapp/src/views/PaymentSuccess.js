@@ -10,12 +10,13 @@ const PaymentSuccess = () => {
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const pg_token = urlParams.get('pg_token');
-        const userId = urlParams.get('userId');
+        const userId = localStorage.getItem('userId');
         const savedTid = localStorage.getItem('tid');  // localStorage에서 tid 가져오기.
         //이거 가져온 후에는 remove로 지우는게 나을 거 같음. 
 
         console.log(`pg_token : ${pg_token}`);
         console.log(`savedTid : ${savedTid}`);
+        console.log(`userId : ${userId}`);
 
         if (pg_token && savedTid) {
             handlePaymentConfirmation(pg_token, savedTid, userId);

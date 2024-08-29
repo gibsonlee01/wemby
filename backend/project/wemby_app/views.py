@@ -75,10 +75,10 @@ def kakaopay_ready(request):
         "partner_user_id": "partner_user_id",
         "item_name": "초코파이",
         "quantity": 1,
-        "total_amount": 2200,
-        "vat_amount": 200,
+        "total_amount": 1000,
+        "vat_amount": 100,
         "tax_free_amount": 0,
-        "approval_url": "http://172.30.4.225:84/PaymentSuccess",
+        "approval_url": "http://172.30.1.4:84/PaymentSuccess",
         "fail_url": "https://www.naver.com",
         "cancel_url": "https://www.naver.com"
     }
@@ -87,7 +87,7 @@ def kakaopay_ready(request):
     
     # 결과를 Response 객체로 반환
     
-    print(result)
+    print(f'하이하 {result}')
     return Response(result)
 
 @api_view(['POST'])
