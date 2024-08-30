@@ -1,16 +1,25 @@
 import React, { Fragment } from 'react';
 import './VideoCard.css';
-import BasicImage from '../photo/basic.png'; 
 import { Row } from 'reactstrap';
-import { useState } from 'react';
-import ProfileImage from '../photo/profile.png';
+import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import Cookies from 'js-cookie'; // 쿠키 라이브러리 추가
+
 
 const VideoCard = ({ user }) => {
     console.log(user)
 
     const [isBlurred, setIsBlurred] = useState(true);
+    // const [savedTid, setSavedTid] = useState(null);
+
+    useEffect(() => {
+        const paymentStatus = Cookies.get(`paymentStatus${user.id}`);
+        console.log(`paymentStatus${user.id} : ${paymentStatus}`);
+        if (paymentStatus === 'success') {
+            setIsBlurred(false);
+        }
+    }, []);
 
     const isMobileDevice = () => {
         return /Mobi|Android/i.test(navigator.userAgent);
@@ -42,11 +51,13 @@ const VideoCard = ({ user }) => {
             });
 
             const data = response.data;
-            console.log("Response Data:", data);  // 응답 데이터 출력
+            localStorage.setItem('userId', user.id); // tid를 저장해둠
+            localStorage.setItem('tid', data.tid); // tid를 저장해둠
+            console.log("Response Tid:", data.tid);  // 응답 데이터 출력
 
             if(isMobileDevice()){
                 if(data.next_redirect_mobile_url){
-                    window.location.href = data.next_redirect_mobile_url;
+                    window.location.href = data.next_redirect_mobile_url
                 }else {
                     Swal.fire({
                         icon: 'error',
@@ -56,7 +67,7 @@ const VideoCard = ({ user }) => {
                 }
             }else{
                 if (data.next_redirect_pc_url) {
-                    window.location.href = data.next_redirect_pc_url;
+                    window.location.href = data.next_redirect_pc_url
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -65,6 +76,7 @@ const VideoCard = ({ user }) => {
                     });
                 }
             }
+
         } catch (error) {
             Swal.fire({
                 icon: 'error',
@@ -73,7 +85,6 @@ const VideoCard = ({ user }) => {
             });
         }
     };
-
 
     return (
         <Fragment>
