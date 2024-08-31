@@ -9,6 +9,7 @@ import axios from 'axios';
 import { API_REGISTER } from '../constants';
 import { useNavigate } from 'react-router-dom';
 // import { Locale } from '../constants';
+import Cookies from 'js-cookie'; // 쿠키 라이브러리 추가
 
 // 유효성 검사 스키마 정의
 const schema = yup.object().shape({
@@ -60,6 +61,7 @@ const Register = () => {
         },
       });
       console.log(response.data);
+      Cookies.set('visit', 'yes'); // 들어온적 있는 유저 체크
       navigate('/list');
     } catch (error) {
       console.error('Error uploading file:', error);

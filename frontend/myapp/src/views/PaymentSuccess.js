@@ -1,7 +1,6 @@
-import react from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import Cookies from 'js-cookie'; // 쿠키 라이브러리 추가
 
 

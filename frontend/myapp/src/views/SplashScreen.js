@@ -3,19 +3,23 @@ import { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Locale } from '../constants';
 import React, { useEffect } from 'react';
+import Cookies from 'js-cookie'; // 쿠키 라이브러리 추가
 
 const SplashScreen = () => {
   const navigate = useNavigate();
+  const visit = Cookies.get('visit');
+  const url = visit === 'yes' ? '/list' : '/register'; // 삼항 연산자로 url 결정
 
-  //후에 user에 몇 명있는지를 파악해서 x명 미만이면 register로 넘기고 아니면 list page로
+  console.log(url); // 디버깅을 위한 로그
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/register'); // 이동하고 싶은 경로로 변경
-    }, 1500); 
+      navigate(url);
+    }, 1500);
 
     return () => clearTimeout(timer); // 클린업
-  }, [navigate]);
-
+  }, [navigate, url]); // navigate와 url을 의존성 배열에 추가
+  
   return (
     <Fragment>
       <Row style={{alignItems:'center', justifyContent:'center', display:'flex'}}>

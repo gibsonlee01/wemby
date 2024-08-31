@@ -36,7 +36,6 @@ const List = () => {
   }, [currentbar]); // currentbar이 변경될 때마다 이 effect가 실행됨
 
 
-
   const handleMenClick = () => {
     // men 버튼 클릭 시 실행할 로직 추가
     // console.log("Men 버튼 클릭됨");

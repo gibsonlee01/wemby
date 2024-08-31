@@ -39,6 +39,8 @@ const VideoCard = ({ user }) => {
     const handleLinkClick = (e) => {
         if (isBlurred) {
             e.preventDefault(); // 기본 동작을 막아 페이지 리로드를 방지
+        } else {
+            window.open(instagramLink);
         }
     };
 
@@ -83,6 +85,51 @@ const VideoCard = ({ user }) => {
                 title: '결제 오류',
                 text: '결제 준비 중 오류가 발생했습니다.',
             });
+        }
+    };
+
+    const renderButton = () => {
+        if (!isBlurred) {
+            return (
+                <button style={{
+                    background: '#4CAF50', // 성공 버튼 색상
+                    border: 'none',
+                    color: 'white',
+                    fontSize: '16px',
+                    fontWeight: '800',
+                    cursor: 'pointer',
+                    width: '100%',
+                    borderRadius: '10px'
+                }} onClick={handleLinkClick}>
+                {user.instagram_id}
+                </button>
+            );
+        } else {
+            return (
+                <button style={{
+                    background: '#efecec', // 버튼 배경 없애기
+                    border: 'none', // 버튼 테두리 없애기
+                    color: '#707070', // 텍스트 색상
+                    fontSize: '16px', // 텍스트 크기
+                    fontWeight: '800',
+                    cursor: 'pointer',
+                    width: '100%',
+                    borderRadius: '10px'
+                }} onClick={() => Swal.fire({
+                    icon: "info",
+                    title: "결제 요청",
+                    text: "아이디를 보시려면 1000원이 부과됩니다.",
+                    showCancelButton: true,
+                    confirmButtonText: "결제",
+                    cancelButtonText: "취소",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        handlePayment();
+                    }
+                })}>
+                    저요👋
+                </button>
+            );
         }
     };
 
@@ -167,29 +214,7 @@ const VideoCard = ({ user }) => {
                     </div>
                     </Row>
                     <Row style={{display:'flex', flex:"1"}}>
-                        <button style={{
-                            background: '#efecec', // 버튼 배경 없애기
-                            border: 'none', // 버튼 테두리 없애기
-                            color: '#707070', // 텍스트 색상
-                            fontSize: '16px', // 텍스트 크기
-                            fontWeight:'800',
-                            cursor: 'pointer',
-                            width:'100%',
-                            borderRadius:'10px'
-                        }} onClick={() => Swal.fire({
-                            icon: "info",
-                            title: "결제 요청",
-                            text: "아이디를 보시려면 1000원이 부과됩니다.",
-                            showCancelButton: true,
-                            confirmButtonText: "결제",
-                            cancelButtonText: "취소",
-                        }).then((result) => {
-                            if(result.isConfirmed){
-                                handlePayment();
-                            }
-                        })}>
-                            저요 👋
-                        </button>
+                        {renderButton()}
                     </Row>
 
                    </Row>
@@ -266,29 +291,7 @@ const VideoCard = ({ user }) => {
                         </div>
                         </Row>
                         <Row style={{display:'flex', flex:"1"}}>
-                            <button style={{
-                                background: '#efecec', // 버튼 배경 없애기
-                                border: 'none', // 버튼 테두리 없애기
-                                color: '#707070', // 텍스트 색상
-                                fontSize: '16px', // 텍스트 크기
-                                fontWeight:'800',
-                                cursor: 'pointer',
-                                width:'100%',
-                                borderRadius:'10px'
-                            }} onClick={() => Swal.fire({
-                                icon: "info",
-                                title: "결제 요청",
-                                text: "아이디를 보시려면 1000원이 부과됩니다.",
-                                showCancelButton: true,
-                                confirmButtonText: "결제",
-                                cancelButtonText: "취소",
-                            }).then((result) => {
-                                if(result.isConfirmed){
-                                    handlePayment();
-                                }
-                            })}>
-                                저요 👋
-                            </button>
+                            {renderButton()} {/* 버튼 렌더링 */}
                         </Row>
                     </Row>
                 )}
