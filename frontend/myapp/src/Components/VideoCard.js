@@ -102,12 +102,12 @@ const VideoCard = ({ user }) => {
                     width: '100%',
                     borderRadius: '10px'
                 }} onClick={handleLinkClick}>
-                <span>프로필 바로가기</span>
-                    {/* <img 
+                <span>프로필 보러가기</span>
+                    <img 
                         src={InstagramIcon} 
                         alt="Instagram Icon" 
-                        style={{ width: '17px', height: '17px' }} 
-                    /> */}
+                        style={{ width: '17px', height: '17px', filter: 'invert(1)'  }} 
+                    />
                 </button>
             );
         } else {
