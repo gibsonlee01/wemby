@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Row } from 'reactstrap';
-import { Avatar } from 'antd';
+import { Avatar,  } from 'antd';
 import BasicImage from '../photo/plus.svg'; 
 import axios from 'axios';
 import { API_REGISTER } from '../constants';
@@ -312,7 +312,7 @@ const Register = () => {
             <div style={{paddingTop:'10px'}}>
               <textarea
               style={styles.customInput} 
-              placeholder='  안녕하세요! 홍익대학교 학생 2명하고 노실 분 구해요'
+              placeholder='안녕하세요! 홍익대학교 학생 2명하고 노실 분 구해요'
               {...register('bio')} 
               rows="4" // 텍스트 필드의 높이를 설정합니다
               />

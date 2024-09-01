@@ -25,11 +25,13 @@ from wemby_app.views import register_user
 from wemby_app.views import get_all_users
 from wemby_app.views import kakaopay_ready
 from wemby_app.views import kakaopay_approve
+from wemby_app.views import likes
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/register', register_user),
     path('api/list', get_all_users),
+    path('api/likes', likes),
     path('api/kakaopay/ready', kakaopay_ready),
     path('api/kakaopay/approve', kakaopay_approve),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

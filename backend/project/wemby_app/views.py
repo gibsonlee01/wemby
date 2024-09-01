@@ -129,4 +129,23 @@ def kakaopay_approve(request):
     # 결과를 Response 객체로 반환
     return Response(result)
         
+
+@api_view(['POST'])
+def likes(request):
+    data = request.data
+    likeChange = data.get('likeChange')  # .get()으로 첫 번째 값을 가져옵니다
+    user_id = data.get('user_id')  # 마찬가지로 .get() 사용
+
+    try:
+        # user_id에 해당하는 유저를 가져옵니다.
+        user = User.objects.get(id=user_id)
         
+        # 유저의 likes 필드를 업데이트합니다.
+        user.likes = user.likes + int(likeChange)
+        user.save()
+
+        return Response({"likes": user.likes}, status=status.HTTP_200_OK)
+    except User.DoesNotExist:
+        return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

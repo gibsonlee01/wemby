@@ -5,26 +5,68 @@ import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import Cookies from 'js-cookie'; // 쿠키 라이브러리 추가
+import { API_LIKES } from '../constants';
+import Heart from "react-heart"
 import InstagramIcon from '../photo/dm.svg';
-
 
 const VideoCard = ({ user }) => {
     console.log(user)
 
     const [isBlurred, setIsBlurred] = useState(true);
-    // const [savedTid, setSavedTid] = useState(null);
+    const [liked, setLiked] = useState(false);
+    const [likes, setLikes] = useState(user.likes); // 좋아요 수를 상태로 관리
+
 
     useEffect(() => {
         const paymentStatus = Cookies.get(`paymentStatus${user.id}`);
-        console.log(`paymentStatus${user.id} : ${paymentStatus}`);
+        const cookieLiked = Cookies.get(`liked${user.id}`);
         if (paymentStatus === 'success') {
             setIsBlurred(false);
         }
+        if (cookieLiked === 'true') {
+            setLiked(true);
+        }
+
     }, []);
+
+    useEffect(() => {    
+    }, [liked]);
 
     const isMobileDevice = () => {
         return /Mobi|Android/i.test(navigator.userAgent);
     }
+
+    const handleLikeClick = async (e) => {
+        const newLikedStatus = !liked;
+        setLiked(newLikedStatus);
+        Cookies.set(`liked${user.id}`, newLikedStatus); // 쿠키에 결제 완료 상태 저장
+
+        // 좋아요 증가 또는 감소 값 결정
+        const likeChange = newLikedStatus ? 1 : -1;
+    
+        // 전송할 데이터 준비
+        const formData = new FormData();
+        formData.append('likeChange', likeChange);
+        formData.append('user_id', user.id)
+    
+        try {
+          const response = await axios.post(API_LIKES, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+          console.log(response.data)
+          const newLikesCount = response.data.likes; // 서버에서 좋아요 수를 반환해야 함
+          setLikes(newLikesCount); // 상태 업데이트
+
+    
+        } catch (error) {
+          console.error('error', error);
+
+        }
+
+      };
+
 
     // 모바일인지 여부에 따라 링크를 설정
     const instagramLink = isMobileDevice()
@@ -102,13 +144,13 @@ const VideoCard = ({ user }) => {
                     width: '100%',
                     borderRadius: '10px'
                 }} onClick={handleLinkClick}>
-                <span>프로필 보러가기</span>
+                <span>프로필 바로가기</span>
                     <img 
                         src={InstagramIcon} 
                         alt="Instagram Icon" 
                         style={{ width: '17px', height: '17px', filter: 'invert(1)'  }} 
                     />
-                </button>
+                </button>         
             );
         } else {
             return (
@@ -160,7 +202,7 @@ const VideoCard = ({ user }) => {
                            flexDirection:'column'
                        }}
                    >
-                    <Row style={{display:'flex', flex:"2"}}>
+                    <Row style={{display:'flex', flex:"2", justifyContent:'space-between'}}>
                         <div style={{
                             display: 'flex', 
                             alignItems: 'center', 
@@ -202,11 +244,16 @@ const VideoCard = ({ user }) => {
                                         margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
                                         padding: '0', // 필요에 따라 padding도 제거
                                     }}>
-                                        {visiblePart}
+                                        @{visiblePart}
                                         <span className={isBlurred ? 'blurred-text' : ''}>{blurredPart}</span>
                                     </h1>
                                 </a>
                             </div>
+                        </div>
+
+                        <div>
+                            <Heart isActive={liked} onClick={handleLikeClick}/>
+                            <div>{likes}</div>
                         </div>
                     </Row>
                     <Row style={{display:'flex', flex:"7", alignItems:'center', justifyContent:'center'}}>
@@ -237,7 +284,7 @@ const VideoCard = ({ user }) => {
                     }}>
 
                         
-                        <Row style={{display:'flex', flex:"2"}}>
+                        <Row style={{display:'flex', flex:"2", justifyContent:'space-between'}}>
                             <div style={{
                                 display: 'flex', 
                                 alignItems: 'center', 
@@ -260,6 +307,7 @@ const VideoCard = ({ user }) => {
                                     }}>
                                         {user.name}
                                     </h1>
+                                    
                                     <a
                                         href={isBlurred ? '#' : instagramLink}
                                         target="_blank"
@@ -278,11 +326,16 @@ const VideoCard = ({ user }) => {
                                             margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
                                             padding: '0', // 필요에 따라 padding도 제거
                                         }}>
-                                            @{visiblePart}
+                                            {visiblePart}
                                             <span className={isBlurred ? 'blurred-text' : ''}>{blurredPart}</span>
                                         </h1>
                                     </a>
                                 </div>
+                            </div>
+                            <div>
+                                <Heart isActive={liked} onClick={handleLikeClick}/>
+ 
+                                <div>{likes}</div>
                             </div>
                         </Row>
                         <Row style={{display:'flex', flex:"7", alignItems:'center', justifyContent:'center'}}>
