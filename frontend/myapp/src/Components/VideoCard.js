@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import Cookies from 'js-cookie'; // 쿠키 라이브러리 추가
+import InstagramIcon from '../photo/dm.svg';
 
 
 const VideoCard = ({ user }) => {
@@ -101,7 +102,12 @@ const VideoCard = ({ user }) => {
                     width: '100%',
                     borderRadius: '10px'
                 }} onClick={handleLinkClick}>
-                {user.instagram_id}
+                <span>프로필 바로가기</span>
+                    {/* <img 
+                        src={InstagramIcon} 
+                        alt="Instagram Icon" 
+                        style={{ width: '17px', height: '17px' }} 
+                    /> */}
                 </button>
             );
         } else {
@@ -118,7 +124,7 @@ const VideoCard = ({ user }) => {
                 }} onClick={() => Swal.fire({
                     icon: "info",
                     title: "결제 요청",
-                    text: "아이디를 보시려면 1000원이 부과됩니다.",
+                    text: "인스타그램 프로필로 이동하려면 1,000원의 결제가 필요합니다.",
                     showCancelButton: true,
                     confirmButtonText: "결제",
                     cancelButtonText: "취소",
@@ -254,7 +260,6 @@ const VideoCard = ({ user }) => {
                                     }}>
                                         {user.name}
                                     </h1>
-                                    
                                     <a
                                         href={isBlurred ? '#' : instagramLink}
                                         target="_blank"
@@ -273,7 +278,7 @@ const VideoCard = ({ user }) => {
                                             margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
                                             padding: '0', // 필요에 따라 padding도 제거
                                         }}>
-                                            {visiblePart}
+                                            @{visiblePart}
                                             <span className={isBlurred ? 'blurred-text' : ''}>{blurredPart}</span>
                                         </h1>
                                     </a>

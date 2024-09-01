@@ -40,10 +40,10 @@ def get_all_users(request):
         
         if gender:
             # gender 필드에 해당하는 사용자만 필터링
-            users = User.objects.filter(gender=gender)
+            users = User.objects.filter(gender=gender).order_by('-id')
         else:
             # gender가 제공되지 않은 경우 모든 사용자 가져오기
-            users = User.objects.all()
+            users = User.objects.all().order_by('-id')
             
         serializer = UserSerializer(users, many=True)  # 사용자 데이터를 직렬화
         return Response(serializer.data, status=status.HTTP_200_OK)  # 직렬화된 데이터와 함께 응답 반환
@@ -78,7 +78,7 @@ def kakaopay_ready(request):
         "total_amount": 1000,
         "vat_amount": 100,
         "tax_free_amount": 0,
-        "approval_url": "http://172.30.1.4:84/PaymentSuccess",
+        "approval_url": "http://192.0.0.2:84/PaymentSuccess",
         "fail_url": "https://www.naver.com",
         "cancel_url": "https://www.naver.com"
     }
