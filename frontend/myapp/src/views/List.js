@@ -3,6 +3,7 @@ import { Fragment } from 'react';
 // import { useNavigate } from 'react-router-dom';
 // import { Locale } from '../constants';
 import React, { useEffect , useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import axios  from 'axios';
 import { API_GETALLUSERS } from '../constants';
 import './css/List.css';
@@ -17,7 +18,10 @@ const List = () => {
   const [error, setError] = useState(null);
   //현재 젠더
   const [currentbar, setCurrntbar] = useState('M');
-  
+
+  const location = useLocation();
+
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -34,6 +38,25 @@ const List = () => {
     fetchUsers();
     
   }, [currentbar]); // currentbar이 변경될 때마다 이 effect가 실행됨
+
+  useEffect(() => {
+    if (users.length > 0) {  // 유저 목록이 로드된 후에 실행
+      const params = new URLSearchParams(location.search);
+      const userId = params.get('userId');
+      console.log(`userId: ${userId}`);
+
+      if (userId) {
+        const element = document.getElementById(userId);
+        if (element) {
+          console.log("Scrolling to element");
+          element.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          console.log("Element not found");
+        }
+      }
+    }
+  }, [users, location.search]);
+
 
 
   const handleMenClick = () => {
@@ -124,14 +147,13 @@ const List = () => {
           <Row style = {{ backgroundColor:'white', height:'80px' }}></Row>
           
           <div class="video-Container">
-          {users.map((user) => (
-            <div class="videoCard" key={user.id}>
-            <VideoCard
-              // profile_picture={user.profile_picture}
-              user={user}
-            />
-            </div>
-          ))}
+            {users.map((user) => (
+              <div className="videoCard" key={user.id} id={user.id}>
+                <VideoCard
+                  user={user}
+                />
+              </div>
+            ))}
           </div>
         </Row>
       </Row>
