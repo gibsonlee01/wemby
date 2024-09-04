@@ -37,10 +37,16 @@ def get_all_users(request):
         # print(gender, gender)
         
         # users = User.objects.all()  # 모든 사용자 가져오기
-        
         if gender:
-            # gender 필드에 해당하는 사용자만 필터링
-            users = User.objects.filter(gender=gender).order_by('-id')
+            # 첫 번째 쿼리: id 기준 상위 5명을 가져오기
+            top_users_by_id = list(User.objects.filter(gender=gender).order_by('-id').values_list('id', flat=True)[:5])
+
+            # 두 번째 쿼리: 상위 5명과 나머지 사용자를 합쳐서 정렬하기
+            other_users_by_likes = User.objects.filter(gender=gender).exclude(id__in=top_users_by_id).order_by('-likes')
+
+            # 쿼리셋으로 결합하지 않고, 직접 리스트로 병합
+            top_users_queryset = User.objects.filter(id__in=top_users_by_id).order_by('-id')
+            users = list(top_users_queryset) + list(other_users_by_likes)
         else:
             # gender가 제공되지 않은 경우 모든 사용자 가져오기
             users = User.objects.all().order_by('-id')

@@ -8,6 +8,7 @@ import Cookies from 'js-cookie'; // 쿠키 라이브러리 추가
 import { API_LIKES } from '../constants';
 import Heart from "react-heart"
 import InstagramIcon from '../photo/dm.svg';
+import getRandomColor from '../views/function/function'
 
 const VideoCard = ({ user }) => {
     console.log(user)
@@ -15,6 +16,8 @@ const VideoCard = ({ user }) => {
     const [isBlurred, setIsBlurred] = useState(true);
     const [liked, setLiked] = useState(false);
     const [likes, setLikes] = useState(user.likes); // 좋아요 수를 상태로 관리
+    const [backgroundColor, setBackgroundColor] = useState(getRandomColor());
+
 
 
     useEffect(() => {
@@ -26,6 +29,8 @@ const VideoCard = ({ user }) => {
         if (cookieLiked === 'true') {
             setLiked(true);
         }
+        setBackgroundColor(getRandomColor());
+
 
     }, []);
 
@@ -202,15 +207,8 @@ const VideoCard = ({ user }) => {
                            flexDirection:'column'
                        }}
                    >
-                    <Row style={{display:'flex', flex:"2", justifyContent:'space-between'}}>
-                        <div style={{
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            justifyContent: 'flex-start', 
-                            // padding: '3px' // 내부 여백 추가
-                            paddingBottom: '8px'
- 
-                        }}>                        
+                          <Row style={{display:'flex', flex:"1", flexDirection:'Col'}}>
+                            <Row style={{ display:'flex', flex:'1', alignItems:'center'}}>
                             <div style={{
                                 display: 'flex', 
                                 flexDirection: 'column', 
@@ -249,13 +247,16 @@ const VideoCard = ({ user }) => {
                                     </h1>
                                 </a>
                             </div>
-                        </div>
+                            </Row>
+                            <Row style={{ display:'flex', flex:'1', justifyContent:'flex-end', alignItems:'center'}}>
+                                    <div style={{paddingTop:'5px'}}>
+                                        <Heart style={{width:'30px', backgroudColor:'white'}} activeColor={"#ff3737"} inactiveColor={"white"} isActive={liked} onClick={handleLikeClick}/>
+                                        <div style={{textAlign:'center', fontWeight:'600', color:'white'}}>{likes}</div>
+                                    </div>
+                            </Row>
 
-                        <div>
-                            <Heart isActive={liked} onClick={handleLikeClick}/>
-                            <div>{likes}</div>
-                        </div>
-                    </Row>
+                        </Row>
+                
                     <Row style={{display:'flex', flex:"7", alignItems:'center', justifyContent:'center'}}>
                     <div style={{
                         color: 'white',        // 글씨 색상을 흰색으로 설정
@@ -276,77 +277,70 @@ const VideoCard = ({ user }) => {
                         // border: '2px solid black', // 테두리 설정
                         padding: '10px', // 내부 여백
                         margin:'20px',
-                        background: '#ff5b5b', 
+                        background: backgroundColor, 
                         borderRadius: '10px', // 모서리 둥글게 설정 (선택사항)
                         minHeight:'300px',
                         display:'flex',
                         flexDirection:'column'
                     }}>
-
-                        
-                        <Row style={{display:'flex', flex:"2", justifyContent:'space-between'}}>
+                        <Row style={{display:'flex', flex:"1", flexDirection:'Col'}}>
+                            <Row style={{ display:'flex', flex:'1', alignItems:'center'}}>
                             <div style={{
                                 display: 'flex', 
-                                alignItems: 'center', 
-                                justifyContent: 'flex-start', 
-                                // padding: '3px' // 내부 여백 추가
-                                paddingBottom: '8px'
-    
-                            }}>                        
-                                <div style={{
-                                    display: 'flex', 
-                                    flexDirection: 'column', 
-                                    marginLeft: '10px',
-                                    gap: '5px', // 간격을 조정하기 위한 gap 속성
+                                flexDirection: 'column', 
+                                marginLeft: '10px',
+                                gap: '5px', // 간격을 조정하기 위한 gap 속성
+                            }}>
+                                <h1 style={{ 
+                                    fontSize: '24px', 
+                                    color: 'white', 
+                                    margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
+                                    padding: '0', // 필요에 따라 padding도 제거
                                 }}>
+                                    {user.name}
+                                </h1>
+                                
+                                <a
+                                    href={isBlurred ? '#' : instagramLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ 
+                                        textDecoration: 'none', 
+                                        color: 'inherit',
+                                        margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
+                                        padding: '0', // 필요에 따라 padding도 제거
+                                    }}
+                                    onClick={handleLinkClick}
+                                >
                                     <h1 style={{ 
-                                        fontSize: '24px', 
                                         color: 'white', 
+                                        fontSize: '10px', 
                                         margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
                                         padding: '0', // 필요에 따라 padding도 제거
                                     }}>
-                                        {user.name}
+                                        @{visiblePart}
+                                        <span className={isBlurred ? 'blurred-text' : ''}>{blurredPart}</span>
                                     </h1>
-                                    
-                                    <a
-                                        href={isBlurred ? '#' : instagramLink}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        style={{ 
-                                            textDecoration: 'none', 
-                                            color: 'inherit',
-                                            margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
-                                            padding: '0', // 필요에 따라 padding도 제거
-                                        }}
-                                        onClick={handleLinkClick}
-                                    >
-                                        <h1 style={{ 
-                                            color: 'white', 
-                                            fontSize: '10px', 
-                                            margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
-                                            padding: '0', // 필요에 따라 padding도 제거
-                                        }}>
-                                            {visiblePart}
-                                            <span className={isBlurred ? 'blurred-text' : ''}>{blurredPart}</span>
-                                        </h1>
-                                    </a>
-                                </div>
+                                </a>
                             </div>
-                            <div>
-                                <Heart isActive={liked} onClick={handleLikeClick}/>
- 
-                                <div>{likes}</div>
-                            </div>
+                            </Row>
+                            <Row style={{ display:'flex', flex:'1', justifyContent:'flex-end', alignItems:'center'}}>
+                                    <div style={{paddingTop:'5px'}}>
+                                        <Heart style={{width:'30px', backgroudColor:'white'}} activeColor={"#ff3737"} inactiveColor={"white"} isActive={liked} onClick={handleLikeClick}/>
+                                        <div style={{textAlign:'center', fontWeight:'600', color:'white'}}>{likes}</div>
+                                    </div>
+                            </Row>
+
                         </Row>
                         <Row style={{display:'flex', flex:"7", alignItems:'center', justifyContent:'center'}}>
-                        <div style={{
-                            color: 'white',        // 글씨 색상을 흰색으로 설정
-                            fontWeight: 'bold',    // 글씨를 두껍게 설정
-                            fontSize: '35px',      // 필요에 따라 글씨 크기 설정
-                            padding: '10px'        // 필요에 따라 여백 설정
-                        }}>
-                            {user.bio}
-                        </div>
+                            <div style={{
+                                color: 'white',        // 글씨 색상을 흰색으로 설정
+                                fontWeight: 'bold',    // 글씨를 두껍게 설정
+                                fontSize: '35px',      // 필요에 따라 글씨 크기 설정
+                                padding: '10px'        // 필요에 따라 여백 설정
+                            }}>
+                                {user.bio}
+                            </div>
                         </Row>
                         <Row style={{display:'flex', flex:"1"}}>
                             {renderButton()} {/* 버튼 렌더링 */}

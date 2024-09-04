@@ -15,7 +15,8 @@ import Cookies from 'js-cookie'; // 쿠키 라이브러리 추가
 const schema = yup.object().shape({
   name: yup.string().required('이름을 입력하세요'),
   gender: yup.string().required('성별을 선택하세요'),
-  instagramId: yup.string().required('인스타그램 아이디를 입력하세요'),
+  instagramId: yup.string().matches(/^[A-Za-z0-9_.]+$/, '인스타그램 아이디를 다시 확인해주세요')
+  .required('인스타그램 아이디를 입력하세요'),
   bio: yup.string().required('간단한 자기소개를 입력하세요'),
 });
 
@@ -24,6 +25,9 @@ const Register = () => {
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      gender: 'M', // gender의 초기값을 'M'으로 설정
+    },
   });
 
   const fileInput = useRef(null);
@@ -35,11 +39,11 @@ const Register = () => {
 
 
   const handleMouseDown = () => {
-    setOpacity(0); // 마우스 다운 시 투명도를 0.5로 설정
+    setOpacity(1) // 마우스 다운 시 투명도를 0.5로 설정
   };
 
   const handleMouseUp = () => {
-    setOpacity(0.2); // 마우스 업 시 투명도를 다시 1로 설정
+    setOpacity(1); // 마우스 업 시 투명도를 다시 1로 설정
   };
 
   const formData = new FormData();
@@ -189,7 +193,7 @@ const Register = () => {
               opacity: '0.7',
             }}>
               # 등록하신 프로필은 개인정보 보호를 위해<br/>
-              오늘이 지나면 삭제됩니다!
+              축제가 끝나면 삭제됩니다!
             </div>
           </div>  
         </Row> 
@@ -250,13 +254,16 @@ const Register = () => {
           <div style={styles.largeBlackText}>
               프로필 사진
           </div>  
-    
+          <div style={styles.middleBlackText}>
+              #필수로 넣지 않아도 돼요
+          </div> 
+
           <Row>
-            <div style={{padding:'10px'}}>
+            <div style={{paddingTop:'10px', paddingBottom:'10px'}}>
               <Row style={{display:'flex', alignItems:"center", justifyContent:'center', backgroundColor:'#e9ecef', borderRadius:'5%'}}>
               <Avatar 
                 src={image} 
-                style={{ margin: '20px' , opacity: opacity }} 
+                style={{ margin: '20px' , opacity: opacity}} 
                 size={150} 
                 //버그수정요망 
                 onClick={() => {
@@ -312,7 +319,7 @@ const Register = () => {
             <div style={{paddingTop:'10px'}}>
               <textarea
               style={styles.customInput} 
-              placeholder='안녕하세요! 홍익대학교 학생 2명하고 노실 분 구해요'
+              placeholder=' xx 부스에서 같이 놀 사람!'
               {...register('bio')} 
               rows="4" // 텍스트 필드의 높이를 설정합니다
               />

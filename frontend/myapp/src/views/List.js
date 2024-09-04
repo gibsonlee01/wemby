@@ -80,7 +80,7 @@ const List = () => {
       <Row style = {{ display : 'flex', justifyContent:'center', alignItems : 'center', backgroundColor : 'white'}}>
         <Row style = {{ minWidth : '400px', backgroundColor:'white'}}>
           <Row style={{ 
-            width:'400px',
+            width:'100%',
             position: 'fixed', 
             top: 0, 
             left: '50%', 
@@ -94,7 +94,7 @@ const List = () => {
             paddingTop: '20px',
             borderBottom: '1px solid #e0e0e0',
           }}>
-            <Row style = {{ display: 'flex', backgroundColor:'white'}}>
+            <Row style = {{ display: 'flex', backgroundColor:'white', marginLeft:'3%'}}>
              
               <Button 
                 style={{ 
@@ -137,9 +137,9 @@ const List = () => {
             </Row>
 
 
-            <div style={{  color: 'black', display: 'flex', alignItems: 'center', marginRight:'7%', paddingBottom: '10px'}}>
+            {/* <div style={{  color: 'black', display: 'flex', alignItems: 'center', marginRight:'7%', paddingBottom: '10px'}}>
               <BiUser size='30' />
-            </div>
+            </div> */}
           </Row>
           {/* 고정된 메뉴바 아래에 빈 공간 추가 */}
             
