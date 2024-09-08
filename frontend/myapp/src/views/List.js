@@ -11,11 +11,13 @@ import { Row, Button } from 'reactstrap';
 import  VideoCard  from '../Components/VideoCard';
 import { BiUser } from "react-icons/bi";
 import { set } from 'react-hook-form';
+import { GridLoader } from 'react-spinners';
 
 const List = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [waitingforData, setWaitingforData] = useState(null);
   //현재 젠더
   const [currentbar, setCurrntbar] = useState('M');
 
@@ -36,6 +38,12 @@ const List = () => {
     };
 
     fetchUsers();
+
+    // 5초마다 자동으로 데이터를 가져오는 타이머 설정
+    const intervalId = setInterval(fetchUsers, 30000); // 30초마다 요청
+
+    // 컴포넌트 언마운트 시 인터벌을 클리어하여 메모리 누수 방지
+    return () => clearInterval(intervalId);
     
   }, [currentbar]); // currentbar이 변경될 때마다 이 effect가 실행됨
 
@@ -145,16 +153,26 @@ const List = () => {
             
           
           <Row style = {{ backgroundColor:'white', height:'80px' }}></Row>
-          
-          <div class="video-Container">
-            {users.map((user) => (
-              <div className="videoCard" key={user.id} id={user.id}>
-                <VideoCard
-                  user={user}
-                />
-              </div>
-            ))}
-          </div>
+
+          {/* 유저가 5명 미만일 때 메시지 표시 */}
+          {users.length < 2 ? (
+            // console.log( `users.length : ${users.length}`),
+            <Row style = {{ flexDirection:'column', display:'flex', alignItems:'center', justifyContent:'center', height:'70vh' }}>
+              <div style={{ textAlign: 'center', marginTop: '20px', marginBottom:'10%', fontSize: 20, fontWeight: 600 }}>곧 시작됩니다. 조금만 기다려 주세요!</div>
+              <Row style = {{ flexDirection:'column', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                <GridLoader size = '40px'/>
+              </Row>
+            </Row>
+          ) : (
+            // 유저가 5명 이상일 때 리스트 표시
+            <div className="video-Container">
+              {users.map((user) => (
+                <div className="videoCard" key={user.id} id={user.id}>
+                  <VideoCard user={user} />
+                </div>
+              ))}
+            </div>
+          )}
         </Row>
       </Row>
     </Fragment>
