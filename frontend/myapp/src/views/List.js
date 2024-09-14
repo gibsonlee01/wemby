@@ -10,18 +10,22 @@ import './css/List.css';
 import { Row, Button } from 'reactstrap';
 import  VideoCard  from '../Components/VideoCard';
 import  PlusCard  from '../Components/PlusCard';
-
+import  EventCard  from '../Components/EventCard';
 import { GridLoader } from 'react-spinners';
+import plus from '../photo/pluspink.svg'; 
+import { Avatar  } from 'antd';
+import { useNavigate } from 'react-router-dom';
+
 
 const List = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [waitingforData, setWaitingforData] = useState(null);
   //현재 젠더
   const [currentbar, setCurrntbar] = useState('M');
 
   const location = useLocation();
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -90,31 +94,27 @@ const List = () => {
           <Row style={{ 
             width:'400px',
             position: 'fixed', 
-            top: 0, 
-            left: '50%', 
-            transform: 'translateX(-50%)', 
             zIndex: 1000, 
             backgroundColor: 'white', 
             display: 'flex', 
             justifyContent: 'space-between', 
             alignItems: 'center', 
-            // padding: '20px 0',
-            paddingTop: '20px',
+            // padding: '10px',
+            paddingTop: '10px',
             borderBottom: '3px solid #e0e0e0',
-            borderRadius:'15px'
+            borderRadius:'15px',
           }}>
             <Row style = {{ display: 'flex', backgroundColor:'white', marginLeft:'3%'}}>
              
               <Button 
                 style={{ 
-                  marginRight: '5%', 
+                  // marginRight: '5%', 
                   fontWeight: '550', 
                   fontSize: '20px', 
                   color: currentbar === 'M' ? '#FF586A' : 'gray',
                   backgroundColor: 'transparent', 
                   border: 'none',
-                  marginRight:'1%',
-                  marginLeft:'12%',
+                  // marginLeft:'12%',
                   paddingBottom:'10px',
                   borderBottom: currentbar === 'M' ? '3px solid #FF586A' : 'none', // 상태에 따른 borderBottom
                 }} 
@@ -144,11 +144,16 @@ const List = () => {
               </Button>
               </div>
             </Row>
+              <Avatar 
+                src={plus} 
+                size={50} 
+                onClick={() => navigate('/register')}
+              />
           </Row>
           {/* 고정된 메뉴바 아래에 빈 공간 추가 */}
             
           
-          <Row style = {{ backgroundColor:'white', height:'80px' }}></Row>
+          <Row style = {{ backgroundColor:'white', height:'100px' }}></Row>
 
           {/* 유저가 5명 미만일 때 메시지 표시 */}
           {users.length < 2 ? (
@@ -162,8 +167,8 @@ const List = () => {
           ) : (
             // 유저가 5명 이상일 때 리스트 표시
             <div className="video-Container">
-                <div className="plusCard" key={`plus-0`}>
-                  <PlusCard />
+                <div className="eventcard" key={`plus-event0`}>
+                  <EventCard />
                 </div>
               {users.map((user, index) => (
                 <React.Fragment key={user.id}>
