@@ -9,8 +9,8 @@ import { API_GETALLUSERS } from '../constants';
 import './css/List.css';
 import { Row, Button } from 'reactstrap';
 import  VideoCard  from '../Components/VideoCard';
-import { BiUser } from "react-icons/bi";
-import { set } from 'react-hook-form';
+import  PlusCard  from '../Components/PlusCard';
+
 import { GridLoader } from 'react-spinners';
 
 const List = () => {
@@ -88,7 +88,7 @@ const List = () => {
       <Row style = {{ display : 'flex', justifyContent:'center', alignItems : 'center', backgroundColor : 'white'}}>
         <Row style = {{ minWidth : '400px', backgroundColor:'white'}}>
           <Row style={{ 
-            width:'100%',
+            width:'400px',
             position: 'fixed', 
             top: 0, 
             left: '50%', 
@@ -100,7 +100,8 @@ const List = () => {
             alignItems: 'center', 
             // padding: '20px 0',
             paddingTop: '20px',
-            borderBottom: '1px solid #e0e0e0',
+            borderBottom: '3px solid #e0e0e0',
+            borderRadius:'15px'
           }}>
             <Row style = {{ display: 'flex', backgroundColor:'white', marginLeft:'3%'}}>
              
@@ -109,17 +110,17 @@ const List = () => {
                   marginRight: '5%', 
                   fontWeight: '550', 
                   fontSize: '20px', 
-                  color: currentbar === 'M' ? 'black' : 'gray',
+                  color: currentbar === 'M' ? '#FF586A' : 'gray',
                   backgroundColor: 'transparent', 
                   border: 'none',
                   marginRight:'1%',
                   marginLeft:'12%',
                   paddingBottom:'10px',
-                  borderBottom: currentbar === 'M' ? '3px solid black' : 'none' // 상태에 따른 borderBottom
+                  borderBottom: currentbar === 'M' ? '3px solid #FF586A' : 'none', // 상태에 따른 borderBottom
                 }} 
                 onClick={handleMenClick}
               >
-                <div style = {{  borderBottom: currentbar === 'M' ? 'black' : 'none' }}>
+                <div style = {{  borderBottom: currentbar === 'M' ? '#FF586A' : 'none' }}>
                   Men
                 </div>
               </Button>
@@ -129,25 +130,20 @@ const List = () => {
                 style={{ 
                   fontWeight: '550', 
                   fontSize: '20px', 
-                  color: currentbar === 'M' ? 'gray' : 'black',
+                  color: currentbar === 'M' ? 'gray' : '#FF586A',
                   backgroundColor: 'transparent', 
                   border: 'none',
                   paddingBottom:'10px',
-                  borderBottom: currentbar === 'M' ? 'none' : '3px solid black' // 상태에 따른 borderBottom
+                  borderBottom: currentbar === 'M' ? 'none' : '3px solid #FF586A' // 상태에 따른 borderBottom
                 }} 
                 onClick={handleWomenClick}
               >
-                <div style = {{ borderBottom: currentbar === 'M' ? 'none' : 'black' }}>
+                <div style = {{ borderBottom: currentbar === 'M' ? 'none' : '#FF586A' }}>
                   Women
                 </div>
               </Button>
               </div>
             </Row>
-
-
-            {/* <div style={{  color: 'black', display: 'flex', alignItems: 'center', marginRight:'7%', paddingBottom: '10px'}}>
-              <BiUser size='30' />
-            </div> */}
           </Row>
           {/* 고정된 메뉴바 아래에 빈 공간 추가 */}
             
@@ -166,10 +162,20 @@ const List = () => {
           ) : (
             // 유저가 5명 이상일 때 리스트 표시
             <div className="video-Container">
-              {users.map((user) => (
-                <div className="videoCard" key={user.id} id={user.id}>
-                  <VideoCard user={user} />
+                <div className="plusCard" key={`plus-0`}>
+                  <PlusCard />
                 </div>
+              {users.map((user, index) => (
+                <React.Fragment key={user.id}>
+                  <div className="videoCard" id={user.id}>
+                    <VideoCard user={user} />
+                  </div>
+                  {index % 5 === 4 && ( 
+                    <div className="plusCard" key={`plus-${index}`}>
+                      <PlusCard />
+                    </div>
+                  )}
+                </React.Fragment>
               ))}
             </div>
           )}

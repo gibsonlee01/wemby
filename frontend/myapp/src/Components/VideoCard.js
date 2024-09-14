@@ -256,8 +256,8 @@ const VideoCard = ({ user }) => {
                             </Row>
                             <Row style={{ display:'flex', flex:'1', justifyContent:'flex-end', alignItems:'center'}}>
                                     <div style={{paddingTop:'5px'}}>
-                                        <Heart style={{width:'30px', backgroudColor:'white'}} activeColor={"#ff3737"} inactiveColor={"white"} isActive={liked} onClick={handleLikeClick}/>
-                                        <div style={{textAlign:'center', fontWeight:'600', color:'white'}}>{likes}</div>
+                                        <Heart style={{width:'30px', backgroudColor:'white'}} activeColor={"#ff3737"} inactiveColor={"black"} isActive={liked} onClick={handleLikeClick}/>
+                                        <div style={{textAlign:'center', fontWeight:'600', color:'black'}}>{likes}</div>
                                     </div>
                             </Row>
 
@@ -318,7 +318,7 @@ const VideoCard = ({ user }) => {
                                     }}
                                     onClick={handleLinkClick}
                                 >
-                                    <h1 style={{ color: 'black', fontSize: '10px', margin: '0', padding: '0' }}>
+                                    <h1 style={{ color: 'white', fontSize: '10px', margin: '0', padding: '0' }}>
                                         @{visiblePart}
                                         <span style = {{ 
                                         filter: isBlurred ? 'blur(2px)' : 'none',
@@ -341,7 +341,7 @@ const VideoCard = ({ user }) => {
                         </Row>
                         <Row style={{display:'flex', flex:"7", alignItems:'center', justifyContent:'center'}}>
                             <div style={{
-                                color: 'black',        // 글씨 색상을 흰색으로 설정
+                                color: 'white',        // 글씨 색상을 흰색으로 설정
                                 fontWeight: 'bold',    // 글씨를 두껍게 설정
                                 fontSize: '35px',      // 필요에 따라 글씨 크기 설정
                                 padding: '10px',      // 필요에 따라 여백 설정
