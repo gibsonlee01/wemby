@@ -80,9 +80,14 @@ const VideoCard = ({ user }) => {
 
 
      // Instagram ID를 반으로 나누기
-    const halfIndex = Math.ceil(user.instagram_id.length / 2);
-    const visiblePart = user.instagram_id.slice(0, halfIndex);
-    const blurredPart = user.instagram_id.slice(halfIndex);
+    // const halfIndex = Math.ceil(user.instagram_id.length / 2);
+    // const visiblePart = user.instagram_id.slice(0, halfIndex);
+    // const blurredPart = user.instagram_id.slice(halfIndex);
+    // 인스타그램 아이디의 절반만 보여줌 (나머지는 공백)
+    const halfIndex = Math.ceil(user.instagram_id.length / 2); // 절반 기준
+    const visiblePart = user.instagram_id.slice(0, halfIndex); // 절반만 보여줌
+    const blurredPart = 'µ'.repeat(user.instagram_id.length - halfIndex); // 공백으로 나머지 숨김
+
 
     const handleLinkClick = (e) => {
         if (isBlurred) {
@@ -236,15 +241,16 @@ const VideoCard = ({ user }) => {
                                     }}
                                     onClick={handleLinkClick}
                                 >
-                                    <h1 style={{ 
-                                        color: 'black', 
-                                        fontSize: '10px', 
-                                        margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
-                                        padding: '0', // 필요에 따라 padding도 제거
-                                    }}>
+                                    <h1 style={{ color: 'black', fontSize: '10px', margin: '0', padding: '0' }}>
                                         @{visiblePart}
-                                        <span className={isBlurred ? 'blurred-text' : ''}>{blurredPart}</span>
+                                        <span style = {{ 
+                                        filter: isBlurred ? 'blur(5px)' : 'none',
+                                        color: isBlurred ? 'rgba(0, 0, 0, 0.3)' : 'inherit',
+                                        transition: 'filter 0.3s ease',
+                                        }}>
+                                        {isBlurred ? blurredPart : user.instagram_id.slice(halfIndex)}</span> 
                                     </h1>
+
                                 </a>
                             </div>
                             </Row>
@@ -312,15 +318,16 @@ const VideoCard = ({ user }) => {
                                     }}
                                     onClick={handleLinkClick}
                                 >
-                                    <h1 style={{ 
-                                        color: 'white', 
-                                        fontSize: '10px', 
-                                        margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
-                                        padding: '0', // 필요에 따라 padding도 제거
-                                    }}>
+                                    <h1 style={{ color: 'black', fontSize: '10px', margin: '0', padding: '0' }}>
                                         @{visiblePart}
-                                        <span className={isBlurred ? 'blurred-text' : ''}>{blurredPart}</span>
+                                        <span style = {{ 
+                                        filter: isBlurred ? 'blur(5px)' : 'none',
+                                        color: isBlurred ? 'rgba(0, 0, 0, 0.3)' : 'inherit',
+                                        transition: 'filter 0.3s ease',
+                                        }}>
+                                        {isBlurred ? blurredPart : user.instagram_id.slice(halfIndex)}</span> 
                                     </h1>
+
                                 </a>
                             </div>
                             </Row>
