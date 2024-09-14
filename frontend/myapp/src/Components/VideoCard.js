@@ -185,7 +185,7 @@ const VideoCard = ({ user }) => {
                         handlePayment();
                     }
                 })}>
-                    저요👋
+                    프로필 보기 👋
                 </button>
             );
         }
