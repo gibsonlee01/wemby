@@ -181,6 +181,27 @@ const List = () => {
           )}
         </Row>
       </Row>
+      <footer style={{
+          width: '100%',
+          backgroundColor: '#f8f9fa',
+          borderTop: '1px solid #e9ecef',
+          marginTop: '50px',
+          display: 'flex',
+          justifyContent: 'center',
+        }}>
+          <div style={{ fontSize: '14px', color: '#6c757d', textAlign:'left'}}>
+            <p>상호명: LETT(레트) | 대표자명: 이지우 </p>
+            <p> 개인정보책임자: 김정훈 </p>
+            <p>사업자 등록번호: 770-21-02096</p>
+            <p>주소: 판교로 430</p>
+            <p>
+              <a href="https://sites.google.com/view/wembyuserule" style={{ color: '#007bff', textDecoration: 'none' }}>이용약관</a> | 
+              <a href="https://sites.google.com/view/wembypersonal" style={{ color: '#007bff', textDecoration: 'none', marginLeft: '10px' }}>개인정보처리방침</a>
+            </p>
+            <p>© 2024 wemby. All rights reserved.</p>
+          </div>
+        </footer>
+
     </Fragment>
   );
 }

@@ -1,13 +1,18 @@
 import React, { Fragment } from 'react';
 import { Row } from 'reactstrap';
-import BasicImage from '../photo/plusWhite.svg'; 
+import PlusWhite from '../photo/plusWhite.svg'; 
 import { Avatar } from 'antd';
+import { useNavigate } from 'react-router-dom';
+
 
 const PlusCard = () => {
+    const navigate = useNavigate();
+
+
     return (
         <Fragment>
             <Row 
-                onClick={() => alert('Row 클릭!')}  // 클릭 이벤트 추가
+                onClick={() => navigate('/register')}  // 클릭 이벤트 추가
                 style={{
                     padding: '10px',
                     margin:'20px',
@@ -36,7 +41,7 @@ const PlusCard = () => {
                     }}
                 >
                     <Avatar 
-                        src={BasicImage} 
+                        src={PlusWhite} 
                         size={130} 
                     />
                 </Row>
