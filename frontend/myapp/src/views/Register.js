@@ -351,11 +351,11 @@ const Register = () => {
           <div style={{ fontSize: '14px', color: '#6c757d', textAlign:'left'}}>
             <p>상호명: LETT(레트) | 대표자명: 이지우 </p>
             <p> 개인정보책임자: 김정훈 </p>
-            <p>사업자 등록번호: 123-45-67890</p>
+            <p>사업자 등록번호: 770-21-02096</p>
             <p>주소: 판교로 430</p>
             <p>
-              <a href="https://sites.google.com/d/1qyP9cE6VXBb1TTGKAsGRQmaqrrp3H0v6/p/1y54ANMr-nIss0Y2HWsmoSCPRPFYCRB8t/edit" style={{ color: '#007bff', textDecoration: 'none' }}>이용약관</a> | 
-              <a href="https://sites.google.com/d/1KD3pqnP4JLVAImuXQKJYQwPtIi4zTDWk/p/1MBBpxJ7_i7pNFLLhzwZZWXTMO_SRHYUM/edit" style={{ color: '#007bff', textDecoration: 'none', marginLeft: '10px' }}>개인정보처리방침</a>
+              <a href="https://sites.google.com/view/wembyuserule" style={{ color: '#007bff', textDecoration: 'none' }}>이용약관</a> | 
+              <a href="https://sites.google.com/view/wembypersonal" style={{ color: '#007bff', textDecoration: 'none', marginLeft: '10px' }}>개인정보처리방침</a>
             </p>
             <p>© 2024 wemby. All rights reserved.</p>
           </div>
