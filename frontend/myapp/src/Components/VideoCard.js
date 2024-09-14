@@ -86,7 +86,7 @@ const VideoCard = ({ user }) => {
     // 인스타그램 아이디의 절반만 보여줌 (나머지는 공백)
     const halfIndex = Math.ceil(user.instagram_id.length / 2); // 절반 기준
     const visiblePart = user.instagram_id.slice(0, halfIndex); // 절반만 보여줌
-    const blurredPart = 'µ'.repeat(user.instagram_id.length - halfIndex); // 공백으로 나머지 숨김
+    const blurredPart = 'ℳ'.repeat(user.instagram_id.length - halfIndex); // 공백으로 나머지 숨김
 
 
     const handleLinkClick = (e) => {
@@ -244,7 +244,7 @@ const VideoCard = ({ user }) => {
                                     <h1 style={{ color: 'black', fontSize: '10px', margin: '0', padding: '0' }}>
                                         @{visiblePart}
                                         <span style = {{ 
-                                        filter: isBlurred ? 'blur(5px)' : 'none',
+                                        filter: isBlurred ? 'blur(2px)' : 'none',
                                         color: isBlurred ? 'rgba(0, 0, 0, 0.3)' : 'inherit',
                                         transition: 'filter 0.3s ease',
                                         }}>
@@ -321,7 +321,7 @@ const VideoCard = ({ user }) => {
                                     <h1 style={{ color: 'black', fontSize: '10px', margin: '0', padding: '0' }}>
                                         @{visiblePart}
                                         <span style = {{ 
-                                        filter: isBlurred ? 'blur(5px)' : 'none',
+                                        filter: isBlurred ? 'blur(2px)' : 'none',
                                         color: isBlurred ? 'rgba(0, 0, 0, 0.3)' : 'inherit',
                                         transition: 'filter 0.3s ease',
                                         }}>
