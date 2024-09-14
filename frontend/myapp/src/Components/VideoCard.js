@@ -217,7 +217,7 @@ const VideoCard = ({ user }) => {
                             }}>
                                 <h1 style={{ 
                                     fontSize: '24px', 
-                                    color: 'white', 
+                                    color: 'black', 
                                     margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
                                     padding: '0', // 필요에 따라 padding도 제거
                                 }}>
@@ -237,7 +237,7 @@ const VideoCard = ({ user }) => {
                                     onClick={handleLinkClick}
                                 >
                                     <h1 style={{ 
-                                        color: 'white', 
+                                        color: 'black', 
                                         fontSize: '10px', 
                                         margin: '0', // 요소 간의 간격을 좁히기 위해 margin 제거
                                         padding: '0', // 필요에 따라 padding도 제거
@@ -259,9 +259,9 @@ const VideoCard = ({ user }) => {
                 
                     <Row style={{display:'flex', flex:"7", alignItems:'center', justifyContent:'center'}}>
                     <div style={{
-                        color: 'white',        // 글씨 색상을 흰색으로 설정
+                        color: 'black',        // 글씨 색상을 흰색으로 설정
                         fontWeight: 'bold',    // 글씨를 두껍게 설정
-                        fontSize: '35px',      // 필요에 따라 글씨 크기 설정
+                        fontSize: '30px',      // 필요에 따라 글씨 크기 설정
                         padding: '10px'        // 필요에 따라 여백 설정
                     }}>
                         {user.bio}
@@ -334,10 +334,10 @@ const VideoCard = ({ user }) => {
                         </Row>
                         <Row style={{display:'flex', flex:"7", alignItems:'center', justifyContent:'center'}}>
                             <div style={{
-                                color: 'white',        // 글씨 색상을 흰색으로 설정
+                                color: 'black',        // 글씨 색상을 흰색으로 설정
                                 fontWeight: 'bold',    // 글씨를 두껍게 설정
                                 fontSize: '35px',      // 필요에 따라 글씨 크기 설정
-                                padding: '10px'        // 필요에 따라 여백 설정
+                                padding: '10px',      // 필요에 따라 여백 설정
                             }}>
                                 {user.bio}
                             </div>
