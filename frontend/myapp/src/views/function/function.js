@@ -20,7 +20,6 @@ const isMobileDevice = () => {
 };
 
 export const handlePaymentRegister = async () => {
-    console.log('들어왔다')
     try {
         const response = await axios.post('/api/kakaopay/register/ready', {
             headers: {

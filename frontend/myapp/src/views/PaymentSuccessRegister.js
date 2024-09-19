@@ -70,7 +70,7 @@ const PaymentSuccessRegister = () => {
             const formDataObject = {
                 name: data.name,
                 gender: data.gender,
-                instagram_id: data.instagramId,
+                instagram_id: data.instagram_id,
                 bio: data.bio,
                 likes: 0,
             };
