@@ -5,10 +5,12 @@ import * as yup from 'yup';
 import { Row } from 'reactstrap';
 import { Avatar,  } from 'antd';
 import BasicImage from '../photo/plus.svg'; 
-import axios from 'axios';
-import { API_REGISTER } from '../constants';
-import { useNavigate } from 'react-router-dom';
-// import { Locale } from '../constants';
+// import axios from 'axios';
+// import { API_REGISTER } from '../constants';
+// import { useNavigate } from 'react-router-dom';
+import {handlePaymentRegister}  from '../views/function/function'
+import Swal from 'sweetalert2';
+
 
 // 유효성 검사 스키마 정의
 const schema = yup.object().shape({
@@ -32,7 +34,7 @@ const Register = () => {
   const fileInput = useRef(null);
   const [image, setImage] = useState(BasicImage);
   const [imagefile, setImagefile] = useState();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [opacity, setOpacity] = useState(0.2); // 초기 opacity 값을 1로 설정
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -45,33 +47,49 @@ const Register = () => {
     setOpacity(1); // 마우스 업 시 투명도를 다시 1로 설정
   };
 
-  const formData = new FormData();
 
+
+const ClickSubmit = (data) => {
+      Swal.fire({
+          icon: "info",
+          title: "결제 요청",
+          text: "내 프로필을 등록하려면 1,000원의 결제가 필요합니다.",
+          showCancelButton: true,
+          confirmButtonText: "결제",
+          cancelButtonText: "취소",
+      }).then(async (result) => {
+          if (result.isConfirmed) {
+              await onSubmit(data); // 결제 요청
+          }
+      });
+};
 
   const onSubmit = async (data) => {
-    formData.append('name', data.name);
-    formData.append('gender', data.gender);
-    formData.append('instagram_id', data.instagramId);
-    formData.append('bio', data.bio);
-    formData.append('likes', 0)
-    if (imagefile){
-      formData.append('profile_picture', imagefile);
-    }
-    try {
-      const response = await axios.post(API_REGISTER, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log(response.data);
-      navigate('/list');
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      alert('파일 업로드 중 오류가 발생했습니다.');
-      window.location.reload(); // 창 리로드
-    }
-  };
 
+    const formDataObject = {
+      name: data.name,
+      gender: data.gender,
+      instagram_id: data.instagramId,
+      bio: data.bio,
+      likes: 0
+    };
+  
+    // 이미지를 제외한 데이터를 로컬 스토리지에 저장
+    localStorage.setItem('formData', JSON.stringify(formDataObject));
+  
+    // 이미지 파일은 로컬 스토리지에 직접 저장할 수 없으므로 따로 처리
+    if (imagefile) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64Image = reader.result; // 이미지를 Base64 문자열로 변환
+        localStorage.setItem('profile_picture', base64Image); // Base64로 변환한 이미지를 로컬 스토리지에 저장
+      };
+      reader.readAsDataURL(imagefile);
+    }
+
+    // 결제 준비 함수 호출
+    await handlePaymentRegister();
+  };
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -160,7 +178,7 @@ const Register = () => {
   return (
     <Fragment>
       <Row style={{alignItems:'center', justifyContent:'center', display:'flex' }}>
-      <form onSubmit={handleSubmit(onSubmit)} style={styles.formStyle}>
+      <form onSubmit={handleSubmit(ClickSubmit)} style={styles.formStyle}>
         <Row>
           <div style={{
             width: "100%",

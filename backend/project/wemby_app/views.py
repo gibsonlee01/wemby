@@ -79,12 +79,12 @@ def kakaopay_ready(request):
         "cid": "TC0ONETIME",
         "partner_order_id": "partner_order_id",
         "partner_user_id": "partner_user_id",
-        "item_name": "초코파이",
+        "item_name": "인스타 프로필 보기",
         "quantity": 1,
-        "total_amount": 1000,
+        "total_amount": 2000,
         "vat_amount": 100,
         "tax_free_amount": 0,
-        "approval_url": "http://192.0.0.2:84/PaymentSuccess",
+        "approval_url": "http://192.168.218.76:84/PaymentSuccess",
         "fail_url": "https://www.naver.com",
         "cancel_url": "https://www.naver.com"
     }
@@ -93,12 +93,12 @@ def kakaopay_ready(request):
     
     # 결과를 Response 객체로 반환
     
-    print(f'하이하 {result}')
     return Response(result)
 
 @api_view(['POST'])
 def kakaopay_approve(request):
     def approve_kakaopay_payment(secret_key, payload):
+        print('승인승인!!!')
         url = 'https://open-api.kakaopay.com/online/v1/payment/approve'
         
         headers = {
@@ -135,6 +135,47 @@ def kakaopay_approve(request):
     # 결과를 Response 객체로 반환
     return Response(result)
         
+
+@api_view(['POST'])
+def kakaopay_register_ready(request):
+    def prepare_kakaopay_payment(secret_key, payload):
+        url = 'https://open-api.kakaopay.com/online/v1/payment/ready'
+        
+        headers = {
+            'Authorization': f'SECRET_KEY {secret_key}',
+            'Content-Type': 'application/json',
+        }
+        
+        response = requests.post(url, headers=headers, json=payload)
+        
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return {'error': response.status_code, 'message': response.text}
+
+    # 사용 예시
+    secret_key = "DEV395B1DB3976D8D956D161AD61A15B0111641D"
+    payload = {
+        "cid": "TC0ONETIME",
+        "partner_order_id": "partner_order_id",
+        "partner_user_id": "partner_user_id",
+        "item_name": "내 프로필 등록하기",
+        "quantity": 1,
+        "total_amount": 1000,
+        "vat_amount": 100,
+        "tax_free_amount": 0,
+        "approval_url": "http://192.168.218.76:84/PaymentSuccessRegister",
+        "fail_url": "https://www.naver.com",
+        "cancel_url": "https://www.naver.com"
+    }
+
+    result = prepare_kakaopay_payment(secret_key, payload)
+    
+    # 결과를 Response 객체로 반환
+    
+    return Response(result)
+
+
 
 @api_view(['POST'])
 def likes(request):

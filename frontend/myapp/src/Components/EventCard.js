@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { Row } from 'reactstrap';
 import airpod from '../photo/starbucks.png'; 
-import { Avatar } from 'antd';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 

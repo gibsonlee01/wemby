@@ -44,6 +44,7 @@ const PaymentSuccess = () => {
                     title: '결제 성공',
                     text: '결제가 완료되었습니다.',
                 }).then(() => {
+                    localStorage.clear()
                     window.location.href = `/list?userId=${userId}`; // 리다이렉트할 URL로 변경
                 });
 

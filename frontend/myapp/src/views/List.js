@@ -155,8 +155,8 @@ const List = () => {
           
           <Row style = {{ backgroundColor:'white', height:'100px' }}></Row>
 
-          {/* 유저가 5명 미만일 때 메시지 표시 */}
-          {users.length < 2 ? (
+          {/* 유저가 5명 미만일 때 메시지 표시 --- 일단 풀어놓음 */}
+          {users.length < 0 ? (
             // console.log( `users.length : ${users.length}`),
             <Row style = {{ flexDirection:'column', display:'flex', alignItems:'center', justifyContent:'center', height:'70vh' }}>
               <div style={{ textAlign: 'center', marginTop: '20px', marginBottom:'10%', fontSize: 20, fontWeight: 600 }}>곧 시작됩니다. 조금만 기다려 주세요!</div>

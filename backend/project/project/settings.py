@@ -27,12 +27,12 @@ SECRET_KEY = 'django-insecure-z)bdq@8cc&(yf!8m#9h28j*vw2=9(r*ww=hg$5!iexz&^n9&0$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost',os.environ.get('DB_HOST'),'127.0.0.1']
+ALLOWED_HOSTS = ['localhost',os.environ.get('DB_HOST'),'127.0.0.1', 'wemby.site:84']
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-CSRF_TRUSTED_ORIGIN = ['http://localhost:84', f'http://{os.environ.get("DB_HOST")}:84', 'http://127.0.0.1:84']
+CSRF_TRUSTED_ORIGIN = ['http://localhost:84', f'http://{os.environ.get("DB_HOST")}:84', 'http://wemby.site:84',  'http://127.0.0.1:84']
 
 # Application definition
 
@@ -97,8 +97,8 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME'), # DB명
         'USER': os.environ.get('DB_USER'), # 데이터베이스 계정
         'PASSWORD': os.environ.get('DB_PW'),
-        'HOST': os.environ.get('DB_HOST'), #use database external ip when db ip bind public
-        # 'HOST': 'host.docker.internal', #use database external ip when db ip bind public
+        # 'HOST': os.environ.get('DB_HOST'), #use database external ip when db ip bind public
+        'HOST': 'host.docker.internal', #use database external ip when db ip bind public
         'PORT': 3306, # 데이터베이스 포트(보통은 3306)
         'CONN_MAX_AGE': 60,
         'CONN_HEALTH_CHECKS': True,

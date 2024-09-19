@@ -8,7 +8,7 @@ import Cookies from 'js-cookie'; // 쿠키 라이브러리 추가
 import { API_LIKES } from '../constants';
 import Heart from "react-heart"
 import InstagramIcon from '../photo/dm.svg';
-import getRandomColor from '../views/function/function'
+import {getRandomColor} from '../views/function/function'
 
 const VideoCard = ({ user }) => {
     console.log(user)
@@ -176,7 +176,7 @@ const VideoCard = ({ user }) => {
                 }} onClick={() => Swal.fire({
                     icon: "info",
                     title: "결제 요청",
-                    text: "인스타그램 프로필로 이동하려면 1,000원의 결제가 필요합니다.",
+                    text: "인스타그램 프로필로 이동하려면 2,000원의 결제가 필요합니다.",
                     showCancelButton: true,
                     confirmButtonText: "결제",
                     cancelButtonText: "취소",
