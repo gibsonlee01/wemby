@@ -97,8 +97,8 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME'), # DB명
         'USER': os.environ.get('DB_USER'), # 데이터베이스 계정
         'PASSWORD': os.environ.get('DB_PW'),
-        # 'HOST': os.environ.get('DB_HOST'), #use database external ip when db ip bind public
-        'HOST': 'host.docker.internal', #use database external ip when db ip bind public
+        'HOST': os.environ.get('DB_HOST'), #use database external ip when db ip bind public
+        # 'HOST': 'host.docker.internal', #use database external ip when db ip bind public
         'PORT': 3306, # 데이터베이스 포트(보통은 3306)
         'CONN_MAX_AGE': 60,
         'CONN_HEALTH_CHECKS': True,
